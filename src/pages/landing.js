@@ -5,7 +5,7 @@ import Router from "next/router";
 const Landing = () => {
     return (
       <div>
-        <h1>Success!</h1>
+        <h1>Success!!</h1>
       </div>
     );
   };
