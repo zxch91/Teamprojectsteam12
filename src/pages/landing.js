@@ -1,11 +1,26 @@
 import React from "react";
 import Router from "next/router";
+import styles from '@/styles/Landing.module.css';
+import { Button, TextField, Typography } from '@mui/material';
 
 
 const Landing = () => {
-    return (
+
+  const chatClicked = () => {
+    console.log("chat clicked");
+  }
+
+  const dataAnalyticsClicked = () => {
+    console.log("Data clicked");
+  }
+     return (
+      <div className="main">
       <div>
-        <h1>Success!!</h1>
+      <Button variant="contained" onClick={chatClicked} className={styles.button}>Login</Button>
+      </div>
+      <div>
+      <Button variant="contained" onClick={dataAnalyticsClicked} className={styles.button}>Login</Button>
+      </div>
       </div>
     );
   };
