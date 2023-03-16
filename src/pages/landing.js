@@ -11,7 +11,7 @@ const Landing = () => {
   }
 
   const dataAnalyticsClicked = () => {
-    console.log("Data clicked");
+    console.log("Dataicked");
   }
      return (
       <div className="main">
