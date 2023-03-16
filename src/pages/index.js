@@ -3,6 +3,7 @@ import { Button, TextField, Typography } from '@mui/material';
 import styles from '@/styles/Login.module.css';
 import Image from 'next/image';
 import { useRouter } from "next/router";
+import { useAuth } from '@/hooks/useAuth';
 
 
 
@@ -25,7 +26,7 @@ const Login = () => {
         <br />
         <TextField label="Password" type="password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input} />
         <br />
-        <Button variant="contained" onClick={handleLogin} className={styles.button}>Login</Button>
+        <Button variant="contained" onClick={handleLogin} className={styles.button}>Loginn</Button>
       </form>
     </div>
   );
