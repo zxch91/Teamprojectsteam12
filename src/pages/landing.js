@@ -14,12 +14,12 @@ const Landing = () => {
     console.log("Dataicked");
   }
      return (
-      <div className="main">
-      <div>
-      <Button variant="contained" onClick={chatClicked} className={styles.button}>Login</Button>
+      <div className={styles.main}>
+      <div className={styles.buttonContainer}> 
+      <Button variant="contained" onClick={chatClicked} className={styles.button}>Your Chats</Button>
       </div>
-      <div>
-      <Button variant="contained" onClick={dataAnalyticsClicked} className={styles.button}>Login</Button>
+      <div className={styles.buttonContainer}>
+      <Button variant="contained" onClick={dataAnalyticsClicked} className={styles.button}>Data Analytics</Button>
       </div>
       </div>
     );
