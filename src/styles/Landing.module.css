@@ -1,3 +1,59 @@
 .button {
-    background-color: blue;
+    background-image: url('../resources/chat.png');
+    width: 800px;
+    height: 500px;
+    color: white;
+    background-size: cover;
+    font-weight: bold;
+    font-size: larger;
+    border-radius: 5px;
+
+
 }
+
+.button2 {
+    background-image: url('../resources/dataAnalytics2.png');
+    width: 800px;
+    height: 500px;
+    color: white;
+    background-size: cover;
+    font-weight: bold;
+    font-size: larger;
+    border-radius: 5px;
+
+}
+
+.button:hover {
+    filter: brightness(30%);
+    transition: 0.3s;
+    color: white;
+}
+
+.button:hover span {
+    color: white;
+}
+
+
+.button2:hover{ 
+    filter: brightness(30%);
+    transition: 0.3s;
+    color: white;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 700px;
+
+}
+
+.buttonContainer{
+    padding: 15px;
+}
+
+.text {
+    font-size: large;
+}
+
+
