@@ -1,7 +1,9 @@
 import React from "react";
 import Router from "next/router";
 import styles from '@/styles/Landing.module.css';
-import { Button, TextField, Typography } from '@mui/material';
+import chat from '../resources/chat.png';
+import { Button, TextField, Typographys } from '@mui/material';
+import Header from "@/components/header";
 
 /* Would be nice to show the latest message that has been sent when the user hovers over 
 over the chat image. I also need to detach the text for each button from the button. So
@@ -14,16 +16,17 @@ const Landing = () => {
   }
 
   const dataAnalyticsClicked = () => {
-    console.log("Dataicked");
+    console.log("DataClicked");
   }
      return (
       <div className = {styles.pageContainer}>
+        <Header />
         <div className={styles.main}>
           <div className={styles.buttonContainer}> 
             <Button variant="contained" onClick={chatClicked} className={styles.button}>Your Chats</Button>
           </div>
-          <div className={styles.buttonContainer}>
-            <Button variant="contained" onClick={dataAnalyticsClicked} className={styles.button2}>Data Analytics</Button>
+          <div className={styles.buttonContainer}> 
+            <Button variant="contained" onClick={chatClicked} className={styles.button2}>Data Analytics</Button>
           </div>
         </div>
       </div>

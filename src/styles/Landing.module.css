@@ -29,8 +29,12 @@
     color: white;
 }
 
+.button:hover span {
+    color: white;
+}
 
-.button2:hover{
+
+.button2:hover{ 
     filter: brightness(30%);
     transition: 0.3s;
     color: white;
@@ -40,7 +44,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 800px;
+    height: 700px;
 
 }
 
@@ -53,6 +57,3 @@
 }
 
 
-.welcomeContainer{
-    width: 100%;
-}
