@@ -20,9 +20,6 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-    <div>
-      <Header />
-    </div>
       <Image src="/Logo.png" width={425} height={100} alt="logo" />
       <form onSubmit={handleLogin} className={styles.form}>
         <TextField label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} />
