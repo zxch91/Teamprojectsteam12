@@ -6,18 +6,6 @@ import { useRouter } from "next/router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import mariadb from 'mariadb';
 
-mariadb.createConnection({
-      socketPath: '/run/mysqld/mysqld.sock',
-      host: '127.0.0.1', 
-      user:'remote',
-      password: 'make-it-all'
-    })
-    .then(conn => {
-      console.log("connected ! connection id is " + conn.threadId);
-    })
-    .catch(err => {
-      console.log("not connected due to error: " + err);
-    });
 
 const Login = () => {
   const [username, setUsername] = useState("");
