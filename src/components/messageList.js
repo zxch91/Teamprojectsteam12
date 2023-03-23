@@ -7,7 +7,7 @@ function MessageList({ messages }) {
   return (
     <List>
       {messages.map((message, index) => (
-        <ListItem key={index} disableGutters>
+        <ListItem key={index}>
           <div
             className={`${styles.messageWrapper} ${
               message.sender === currentUser ? styles.sender : ''
