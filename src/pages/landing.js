@@ -23,6 +23,9 @@ const Landing = () => {
   const dataAnalyticsClicked = () => {
     console.log("DataClicked");
   }
+
+  const {query} = useRouter();
+  const {username} = query;
      return (
       <div className = {styles.pageContainer}>
         <Header />

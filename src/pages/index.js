@@ -4,6 +4,7 @@ import styles from "@/styles/Login.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Link from "next/link";
 
 
 const Login = () => {
@@ -30,7 +31,10 @@ const Login = () => {
       .then((response) => {
         if (response.ok) {
           // Login successful, redirect to landing page
-          router.push("/landing");
+          router.push({
+            pathname: '/landing',
+            query: { username },
+          });
         } else {
           // Login failed, display error message
           console.log("Login failed");
