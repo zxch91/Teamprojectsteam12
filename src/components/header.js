@@ -14,6 +14,10 @@ const Header = () => {
             <Image src="/Logo.png" width={160} height={35} alt="logo" />
           </div>   
         </div>
+        <div className = {styles.loggedInContainer}>
+          
+          <Button>Someone</Button>
+        </div>
       </div>
       
     );
