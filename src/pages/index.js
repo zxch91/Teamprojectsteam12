@@ -44,7 +44,6 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <button onClick={asyncFunction()}> Button </button>
       <Image src="/Logo.png" width={425} height={100} alt="logo" />
       <form onSubmit={handleLogin} className={styles.form}>
         <TextField
@@ -86,3 +85,4 @@ const Login = () => {
 };
 
 export default Login;
+
