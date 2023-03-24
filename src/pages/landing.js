@@ -28,7 +28,6 @@ const Landing = () => {
   const {username} = query;
      return (
       <div className = {styles.pageContainer}>
-        <Header />
         <div className={styles.main}>
           <div className={styles.buttonContainer}> 
             <Button variant="contained" onClick={handleChatButton} className={styles.button}>Your Chats</Button>
