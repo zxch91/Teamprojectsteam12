@@ -1,11 +1,20 @@
-import React, { useState } from "react";
 import { Button, TextField, Typography, IconButton } from "@mui/material";
-import styles from "@/styles/Login.module.css";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import Link from "next/link";
+import styles from "@/styles/Login.module.css";
+import Image from "next/image";
+import React, { useState } from 'react';
+import axios from 'axios';
 
+const apiEndpoint = '/api/testing';
+
+axios.get(apiEndpoint)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
 const Login = () => {
   const [username, setUsername] = useState("");
