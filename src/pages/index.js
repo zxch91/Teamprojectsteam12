@@ -8,6 +8,20 @@ import axios from 'axios';
 
 const apiEndpoint = '/api/testing';
 
+const api = () => {
+  fetch(apiEndpoint, {
+    method: "GET",
+    
+    // ? What does this bit do?
+
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }).catch((error) => {
+    console.log(error.message);
+  });
+};
+/*
 axios.get(apiEndpoint)
   .then(response => {
     console.log(response.data);
@@ -15,6 +29,7 @@ axios.get(apiEndpoint)
   .catch(error => {
     console.error(error);
   });
+*/
 
 const Login = () => {
   const [username, setUsername] = useState("");

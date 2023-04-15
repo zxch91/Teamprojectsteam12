@@ -59,16 +59,20 @@ const SSHConnection = new Promise((resolve, reject) => {
   }).connect(tunnelConfig);
 });
 
-function executeQuery(sql) {
-  SSHConnection.then((connection) => {
-    connection.query(sql, function (err, result) {
-      if (err) console.log(err);
-      console.log(result);
-      return result;
+async function executeQuery(sql) {
+  try {
+    const connection = await SSHConnection;
+    const result = await new Promise((resolve, reject) => {
+      connection.query(sql, function (err, result) {
+        if (err) reject(err);
+        resolve(result);
+      });
     });
-  }).catch((error) => {
-    console.error(error);
-  });
-};
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
+
 
 export default executeQuery;
