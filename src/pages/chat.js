@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import MessageList from '../components/MessageList';
+import MessageList from '../components/messageList';
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
 import styles from '@/styles/Chat.module.css';
 import Sidebar from '../components/Sidebar';
+import Channel from '../components/Channel';
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -13,6 +14,13 @@ export default function Chat() {
       .then((response) => response.json())
       .then((data) => setMessages(data));
   }, []);
+
+  const channels = [
+    { id: 1, title: 'Channel 1' },
+    { id: 2, title: 'Channel 2' },
+    { id: 3, title: 'Channel 3' },
+  ];
+
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -35,10 +43,13 @@ export default function Chat() {
   return (
     <Container maxWidth="lg" sx={{ display: 'flex' }}>
       <Sidebar className={styles.sidebar} />
-      <Box flexGrow={1} className={styles.chatContainer}>
-        <Typography variant="h4" gutterBottom>
-          Chat App
-        </Typography>
+      <Box flexGrow={1} className={styles.chatContainer} >
+        <Box className={styles.channelList}>
+          {channels.map((channel) => (
+            <Channel key={channel.id} title={channel.title} />
+          ))}
+        </Box>
+        {/*
         <Box className={styles.messageList}>
           <MessageList messages={messages} />
         </Box>
@@ -54,6 +65,7 @@ export default function Chat() {
             Send
           </Button>
         </form>
+          */}
       </Box>
     </Container>
   );
