@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import MessageList from '../components/messageList';
-import { Container, Box, TextField, Button, Typography } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
 import styles from '@/styles/Chat.module.css';
 import Sidebar from '../components/Sidebar';
 import Channel from '../components/Channel';
+import ChatBox from '../components/ChatBox';
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [selectedChannel, setSelectedChannel] = useState(false);
+  const [showChannelList, setShowChannelList] = useState(true);
 
   useEffect(() => {
     fetch('/api/messages')
@@ -20,7 +23,6 @@ export default function Chat() {
     { id: 2, title: 'Channel 2' },
     { id: 3, title: 'Channel 3' },
   ];
-
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -40,32 +42,37 @@ export default function Chat() {
     }
   };
 
+  const handleChannelSelect = (channel) => {
+    setSelectedChannel(channel);
+    setShowChannelList(false);
+    fetch(`/api/messages?channel=${channel.id}`)
+      .then((response) => response.json())
+      .then((data) => setMessages(data));
+  };
+
   return (
     <Container maxWidth="lg" sx={{ display: 'flex' }}>
       <Sidebar className={styles.sidebar} />
-      <Box flexGrow={1} className={styles.chatContainer} >
-        <Box className={styles.channelList}>
-          {channels.map((channel) => (
-            <Channel key={channel.id} title={channel.title} />
-          ))}
-        </Box>
-        {/*
-        <Box className={styles.messageList}>
-          <MessageList messages={messages} />
-        </Box>
-        <form onSubmit={sendMessage}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
-            sx={{ marginBottom: '1rem' }}
+      <Box flexGrow={1} className={styles.chatContainer}>
+        {selectedChannel && (
+          <ChatBox
+            messages={messages}
+            inputMessage={inputMessage}
+            setInputMessage={setInputMessage}
+            sendMessage={sendMessage}
           />
-          <Button fullWidth variant="contained" type="submit">
-            Send
-          </Button>
-        </form>
-          */}
+        )}
+        {showChannelList && (
+          <Box className={styles.channelList}>
+            {channels.map((channel) => (
+              <Channel
+                key={channel.id}
+                title={channel.title}
+                onClick={() => handleChannelSelect(channel)}
+              />
+            ))}
+          </Box>
+        )}
       </Box>
     </Container>
   );
