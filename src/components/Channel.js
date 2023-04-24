@@ -4,9 +4,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const Channel = ({ title }) => {
-  return (
-    <Card
+const Channel = ({ title, onClick }) => {
+  {return (
+    <Card onClick={onClick}
       sx={{
         maxWidth: 300,
         margin: "10px auto",
@@ -32,7 +32,7 @@ const Channel = ({ title }) => {
         </Typography>
       </CardContent>
     </Card>
-  );
+  );}
 };
 
 export default Channel;
