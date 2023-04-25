@@ -6,29 +6,36 @@ import Typography from "@mui/material/Typography";
 
 const Channel = ({ title, onClick }) => {
   {return (
+    
     <Card onClick={onClick}
       sx={{
-        maxWidth: 300,
-        margin: "10px auto",
         cursor: "pointer",
-        backgroundColor: "#f5f5f5",
-        transition: "transform 0.2s",
+        width: "100%",
+        backgroundColor: "#ffffff",
+        border: "1px solid #e0e0e0",
         boxShadow: "none",
-        "&:hover": {
-          transform: "scale(1.05)",
-          boxShadow: "0 0 5px 0px rgba(0, 0, 0, 0.2)",
-        },
+        borderRadius: 0,
+        overflow: "hidden",
       }}
       variant="outlined"
     >
-      <CardContent>
+      
+      <CardContent sx={{ padding: "20px" }}>
         <Typography
           variant="h6"
           component="h2"
-          align="center"
-          sx={{ fontWeight: "bold", color: "#212121" }}
+          align="left"
+          sx={{ fontWeight: "bold", color: "#212121", marginBottom: "10px" }}
         >
           {title}
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          component="p"
+          align="left"
+          sx={{ color: "#666666" }}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus urna non augue convallis ultrices.
         </Typography>
       </CardContent>
     </Card>
@@ -36,4 +43,3 @@ const Channel = ({ title, onClick }) => {
 };
 
 export default Channel;
-    
