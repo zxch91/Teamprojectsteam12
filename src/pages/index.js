@@ -1,11 +1,35 @@
-import React, { useState } from "react";
 import { Button, TextField, Typography, IconButton } from "@mui/material";
-import styles from "@/styles/Login.module.css";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import mariadb from 'mariadb';
+import styles from "@/styles/Login.module.css";
+import Image from "next/image";
+import React, { useState } from 'react';
+import axios from 'axios';
 
+const apiEndpoint = '/api/testing';
+
+const api = () => {
+  fetch(apiEndpoint, {
+    method: "GET",
+    
+    // ? What does this bit do?
+
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }).catch((error) => {
+    console.log(error.message);
+  });
+};
+/*
+axios.get(apiEndpoint)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+*/
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -31,7 +55,10 @@ const Login = () => {
       .then((response) => {
         if (response.ok) {
           // Login successful, redirect to landing page
-          router.push("/landing");
+          router.push({
+            pathname: '/landing',
+            query: { username },
+          });
         } else {
           // Login failed, display error message
           console.log("Login failed");

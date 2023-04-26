@@ -1,19 +1,25 @@
-.headerContainer{
+.headerContainer {
     display: flex;
-    width: 100%;
+    justify-content: space-between; /* Add this */
+    width: 90%;
     height: 100px;
-    background-color: yellow;
-}
-
-.logo{
+    border-bottom: 2px solid black;
+    align-items: center;
+    padding: 0 5%;
+  }
+  
+  .headerElements {
+    width: 50%;
+  }
+  
+  .loggedInContainer {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end; /* Add this */
+  }
+  
+  .logo {
     height: 50;
-    width: 50,
-}
+    width: 50;
+  }
 
-.headerElements{
-    margin-top: 10px;
-}
-
-.logoContainer{
-    margin-top: 20px;
-}
