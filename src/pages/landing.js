@@ -21,8 +21,12 @@ const Landing = () => {
   };
 
   const dataAnalyticsClicked = () => {
-    console.log("DataClicked");
-  }
+    console.log("Data Clicked");
+  };
+
+  const handleDataButton = () => {
+    router.push("/data");
+  };
 
   const {query} = useRouter();
   const {username} = query;
@@ -33,7 +37,7 @@ const Landing = () => {
             <Button variant="contained" onClick={handleChatButton} className={styles.button}>Your Chats</Button>
           </div>
           <div className={styles.buttonContainer}> 
-            <Button variant="contained" onClick={chatClicked} className={styles.button2}>Data Analytics</Button>
+            <Button variant="contained" onClick={handleDataButton} className={styles.button2}>Data Analytics</Button>
           </div>
         </div>
       </div>
