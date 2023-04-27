@@ -13,7 +13,7 @@ export default function Chat() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch('/api/messages')
+    fetch('/api/message')
       .then((response) => response.json())
       .then((data) => setMessages(data));
   }, []);

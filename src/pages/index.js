@@ -4,32 +4,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import styles from "@/styles/Login.module.css";
 import Image from "next/image";
 import React, { useState } from 'react';
-import axios from 'axios';
 
-const apiEndpoint = '/api/testing';
-
-const api = () => {
-  fetch(apiEndpoint, {
-    method: "GET",
-    
-    // ? What does this bit do?
-
-    headers: {
-      "Content-Type": "application/json",
-    }
-  }).catch((error) => {
-    console.log(error.message);
-  });
-};
-/*
-axios.get(apiEndpoint)
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-*/
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -43,7 +18,7 @@ const Login = () => {
     setPassword({ ...password, showPassword: !password.showPassword }); // creates ability to toggle password visibility
   };
 
-  const url = "/api/users"; 
+  const url = "/api/login"; 
   const handleLogin = () => {
     fetch(url, {
       method: "POST",

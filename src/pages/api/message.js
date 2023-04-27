@@ -5,6 +5,7 @@ export default async function handler(req, res) {
   switch(req.method) {
     case "GET":
       //* GET to retrieve a resource
+
       const sqlGet = "SELECT * FROM store.Message"
       
       const resultGet = await executeQuery(sqlGet)
@@ -18,22 +19,22 @@ export default async function handler(req, res) {
       case "POST":
         //* POST to create a resource
 
-      var sqlPost = "INSERT INTO store.User \
-      (username, email, password, created_at, user_type)\
-      VALUES (?, ?, ?, ?, ?);"
-      
-      const emailPost = req.body['email'];
-      const usernamePost = req.body['username'];
-      const passwordPost = req.body['password']
-      const createdAtPost = new Date().toISOString().slice(0, 19).replace('T', ' ');
-      const userTypePost = req.body['userType']
+        var sqlPost = "INSERT INTO store.Message \
+        INSERT INTO `Message`(sender_id, recipient_id, content, sent_at) \
+        VALUES (?, ?, ?, ?);"
+        
+        const emailPost = req.body['email'];
+        const usernamePost = req.body['username'];
+        const passwordPost = req.body['password']
+        const createdAtPost = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        const userTypePost = req.body['userType']
 
-      const insertPost = [usernamePost, emailPost, passwordPost, createdAtPost, userTypePost];
-      sqlPost = mysql.format(sqlPost, insertPost);
+        const insertPost = [usernamePost, emailPost, passwordPost, createdAtPost, userTypePost];
+        sqlPost = mysql.format(sqlPost, insertPost);
 
-      const resultPost = await executeQuery(sqlPost)
-      res.status(200).json({ result: resultPost })
-      break;
+        const resultPost = await executeQuery(sqlPost)
+        res.status(200).json({ result: resultPost })
+        break;
       
       case "PUT":
         //* PUT to change the state of or update a resource, which can be an object, file or block
