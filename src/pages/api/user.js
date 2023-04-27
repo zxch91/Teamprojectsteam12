@@ -8,7 +8,6 @@ export default async function handler(req, res) {
       const sqlGet = "SELECT * FROM store.User"
       
       const resultGet = await executeQuery(sqlGet)
-      console.log(typeof resultGet)
       res.status(200).json({ result: resultGet })
       break;
 

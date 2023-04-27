@@ -9,7 +9,6 @@ export default async function handler(req, res) {
       const sqlGet = "SELECT * FROM store.Message"
       
       const resultGet = await executeQuery(sqlGet)
-      console.log(typeof resultGet)
       res.status(200).json({ result: resultGet })
       break;
 
@@ -20,48 +19,26 @@ export default async function handler(req, res) {
         //* POST to create a resource
 
         var sqlPost = "INSERT INTO store.Message \
-        INSERT INTO `Message`(sender_id, recipient_id, content, sent_at) \
-        VALUES (?, ?, ?, ?);"
+        INSERT INTO `Message`(sender_id, recipient_id, content, sent_at, group_id) \
+        VALUES (?, ?, ?, ?, ?);"
         
-        const emailPost = req.body['email'];
-        const usernamePost = req.body['username'];
-        const passwordPost = req.body['password']
-        const createdAtPost = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        const userTypePost = req.body['userType']
+        const senderId = req.body['senderId'];
+        const recipientId = req.body['recipientId'];
+        const content = req.body['content']
+        const sentAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        const groupId = req.body['groupId']
 
-        const insertPost = [usernamePost, emailPost, passwordPost, createdAtPost, userTypePost];
+        const insertPost = [senderId, recipientId, content, sentAt, groupId];
         sqlPost = mysql.format(sqlPost, insertPost);
 
         const resultPost = await executeQuery(sqlPost)
         res.status(200).json({ result: resultPost })
         break;
       
-      case "PUT":
-        //* PUT to change the state of or update a resource, which can be an object, file or block
-        var sqlPut = "UPDATE store.User SET email = ? WHERE user_id = ?"
-  
-        const emailPut = req.body['email'];
-        const userIdPut = req.body['userId'];
-        
-        const insertPut = [emailPut, userIdPut];
-        sqlPut = mysql.format(sqlPut,insertPut)
-  
-        const resultPut = await executeQuery(sqlPut)
-        res.status(200).json({ result: resultPut })
-        break;
+    // Don't need the funcionality to change anything in messages.
+    // if I'm lying change this
 
-    case "DELETE":
-      //* DELETE to remove it
-      var sqlDelete = 'DELETE FROM store.User WHERE user_id = ?';
-
-      const userIdDelete = req.body['userId'];
-
-      const insertDelete = [userIdDelete];
-      sqlDelete = mysql.format(sqlDelete, insertDelete);
-
-      const resultDelete = await executeQuery(sqlDelete)
-      res.status(200).json({ result: resultDelete })
-      break;
+    // Shouldn't be able to delete messages.
       
     default:
       console.log("Please enter a valid method")
