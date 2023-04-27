@@ -12,15 +12,16 @@ import Sidebar from '../components/Sidebar';
 import styles from '@/styles/Chat.module.css';
 
 export default function CreateChat() {
-  const [users, setUsers] = useState([
-    'Zach',
-    'Will',
-    'Oli',
-    'Peter',
-    'Ayush',
-    'George',
-    // Add your list of users here
-  ]);
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  
+  fetch("http://localhost:3000/api/creategroup", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+    
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const handleCreateChat = () => {
