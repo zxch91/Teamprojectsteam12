@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -16,13 +16,34 @@ export default function CreateChat() {
     method: 'GET',
     redirect: 'follow'
   };
+  const fetchUsers = () => {
+    return fetch("http://localhost:3000/api/creategroup", requestOptions)
+      .then(response => response.json())
+      .then(result => result)
+      .catch(error => console.log('error', error));
+  }
   
-  fetch("http://localhost:3000/api/creategroup", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-    
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  
+
+  const [users, setUsers] = useState([]);
+const [selectedUsers, setSelectedUsers] = useState([]);
+
+useEffect(() => {
+  fetchUsers().then((res) => {
+    if (res) {
+      const usernames = [];
+      for (let i = 0; i < res.result.length; i++) {
+        usernames.push(res.result[i].username);
+      }
+      setUsers(usernames, () => {
+        console.log(users);
+      });
+    }
+  });
+}, []);
+
+
+  
 
   const handleCreateChat = () => {
     
@@ -45,6 +66,7 @@ export default function CreateChat() {
         </Typography>
         <Box className={styles.messageList}>
           <List>
+          {console.log(users)}
             {users.map((user) => (
               <ListItem button key={user} onClick={() => handleUserSelection(user)}>
                 <ListItemIcon>
