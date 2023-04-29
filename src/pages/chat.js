@@ -10,6 +10,7 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [selectedChannel, setSelectedChannel] = useState(false);
+  const [channel, setChannels] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -23,6 +24,39 @@ export default function Chat() {
     { id: 2, title: 'Channel 2' },
     { id: 3, title: 'Channel 3' },
   ];
+
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+
+  const fetchChannels = () => {
+    return fetch("api/viewchat", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+
+  }
+
+  useEffect(() => {
+    fetchChannels().then((res) => {
+      if (res) {
+        const channels = []
+        for (const c in res) {
+          const channel = {
+            id : res[c].group_id,
+            name: res[c].group_name
+          }
+          channels.push(channel);
+      }
+      setChannels(channels)
+    }
+  }, [])});
+
+  useEffect(() => {
+    console.log(channel);
+  }, [channel]);
+
 
   const sendMessage = async (e) => {
     e.preventDefault();
