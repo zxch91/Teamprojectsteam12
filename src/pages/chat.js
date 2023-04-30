@@ -32,11 +32,11 @@ export default function Chat() {
 
   const fetchChannels = () => {
     return fetch("api/viewchat", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-
+      .then(response => response.json())
+      .then(result => result.result) // extract channels from result property
+      .catch(error => console.log('error', error));
   }
+  
 
   useEffect(() => {
     fetchChannels().then((res) => {
@@ -48,10 +48,12 @@ export default function Chat() {
             name: res[c].group_name
           }
           channels.push(channel);
+        }
+        setChannels(channels)
       }
-      setChannels(channels)
-    }
-  }, [])});
+    })
+  }, []);
+  
 
   useEffect(() => {
     console.log(channel);
@@ -89,10 +91,10 @@ export default function Chat() {
       <Sidebar className={styles.sidebar} />
       <Box flexGrow={0} width={200}>
         <TextField id="chatSearch" label="Chat Search" variant="outlined" sx={{mt: "10px", mb:"5px"}} />
-        {channels.map((channel) => (
+        {channel.map((channel) => (
           <Channel
             key={channel.id}
-            title={channel.title}
+            title={channel.name}
             onClick={() => handleChannelSelect(channel)}
           />
         ))}
