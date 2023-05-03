@@ -1,7 +1,8 @@
-.table {
-    min-width: 650;
-}
-
-h1 {
-    text-align: center;
+.chartContainer {
+    width: 50%;
+    min-width: 200px;
+    height: 300px;
+    min-height: 200px;
+    padding: 0 10px;
   }
+  
