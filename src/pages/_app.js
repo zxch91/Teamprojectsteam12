@@ -11,7 +11,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 function MyApp({ Component, pageProps }) {
   return (
     <div className="parent">
-      <div><Header/></div>
       <Component {...pageProps} />
     </div>
   );
