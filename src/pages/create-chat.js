@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Sidebar from '../components/Sidebar';
 import styles from '@/styles/Chat.module.css';
+import TextField from '@mui/material/TextField';
 
 export default function CreateChat() {
   var requestOptions = {
@@ -17,7 +18,7 @@ export default function CreateChat() {
     redirect: 'follow'
   };
   const fetchUsers = () => {
-    return fetch("http://localhost:3000/api/creategroup", requestOptions)
+    return fetch("/api/creategroup", requestOptions)
       .then(response => response.json())
       .then(result => result)
       .catch(error => console.log('error', error));
@@ -25,29 +26,46 @@ export default function CreateChat() {
   
   
 
-  const [users, setUsers] = useState([]);
+const [users, setUsers] = useState([]);
+const [ids, setIds] = useState([]);
 const [selectedUsers, setSelectedUsers] = useState([]);
 
 useEffect(() => {
   fetchUsers().then((res) => {
     if (res) {
       const usernames = [];
+      const userIDs = [];
       for (let i = 0; i < res.result.length; i++) {
         usernames.push(res.result[i].username);
+        userIDs.push(res.result[i].user_id);
       }
-      setUsers(usernames, () => {
-        console.log(users);
-      });
+      setUsers(usernames);
+      setIds(userIDs);
     }
   });
 }, []);
 
+useEffect(() => {
+  console.log(users);
+  console.log(ids);
+}, [users, ids]);
+
 
   
 
-  const handleCreateChat = () => {
-    
-  };
+const handleCreateChat = () => {
+  const chatName = document.getElementById("chatName").value;
+  const chatMembers = selectedUsers.map((user) => ids[users.indexOf(user)]); // map usernames to IDs
+  fetch("/api/creategroup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chatName, chatMembers })
+  })
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.log(error));
+};
+
 
   const handleUserSelection = (user) => {
     if (selectedUsers.includes(user)) {
@@ -77,6 +95,7 @@ useEffect(() => {
             ))}
           </List>
         </Box>
+        <TextField id="chatName" label="Chat Name" variant="outlined" sx={{mt: "10px", mb:"5px"}} />
         <Button fullWidth variant="contained" onClick={handleCreateChat}>
           Create Chat
         </Button>
