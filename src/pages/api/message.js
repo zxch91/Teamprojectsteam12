@@ -12,9 +12,6 @@ export default async function handler(req, res) {
       res.status(200).json({ result: resultGet })
       break;
 
-
-      
-      
       case "POST":
         //* POST to create a resource
 

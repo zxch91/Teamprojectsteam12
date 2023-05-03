@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import MessageList from "../components/messageList";
 import { Container, Box, Typography, TextField } from "@mui/material";
@@ -5,6 +6,16 @@ import styles from "@/styles/Chat.module.css";
 import Sidebar from "../components/Sidebar";
 import Channel from "../components/Channel";
 import ChatBox from "../components/ChatBox";
+=======
+import { useState, useEffect } from 'react';
+import MessageList from '../components/messageList';
+import { Container, Box, Typography, TextField } from '@mui/material';
+import styles from '@/styles/Chat.module.css';
+import Sidebar from '../components/Sidebar';
+import Channel from '../components/Channel';
+import ChatBox from '../components/ChatBox';
+import Header from '@/components/header';
+>>>>>>> 9905e2878de6b04dd01d166e06974c13b1fa8887
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -89,7 +100,13 @@ export default function Chat() {
   };
 
   return (
+<<<<<<< HEAD
     <Container maxWidth="lg" sx={{ display: "flex" }}>
+=======
+    <div className = {styles.pageContainer}>
+    <div><Header/></div>
+    <Container maxWidth="lg" sx={{ display: 'flex' }}>
+>>>>>>> 9905e2878de6b04dd01d166e06974c13b1fa8887
       <Sidebar className={styles.sidebar} />
       <Box flexGrow={0} width={200}>
         <TextField
@@ -119,5 +136,6 @@ export default function Chat() {
         )}
       </Box>
     </Container>
+    </div>
   );
 }
