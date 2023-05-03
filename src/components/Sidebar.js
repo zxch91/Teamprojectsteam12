@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,6 +7,21 @@ import ListItemText from '@mui/material/ListItemText';
 import ChatIcon from '@mui/icons-material/Chat';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
+const StyledDrawer = styled(Drawer)`
+  .MuiDrawer-paper {
+    width: 240px;
+    background-color: #f5f5f5;
+    margin-top: 130px;
+  }
+`;
+
+const StyledListItem = styled(ListItem)`
+  &:hover {
+    background-color: #e0e0e0;
+  }
+`;
 
 const Sidebar = () => {
   const router = useRouter();
@@ -21,22 +36,22 @@ const Sidebar = () => {
 
   return (
     <>
-      <Drawer variant="permanent" anchor="left">
+      <StyledDrawer variant="permanent" anchor="left">
         <List>
-          <ListItem button onClick={navigateToViewChats}>
+          <StyledListItem button onClick={navigateToViewChats}>
             <ListItemIcon>
               <ChatIcon />
             </ListItemIcon>
             <ListItemText primary="View Chats" />
-          </ListItem>
-          <ListItem button onClick={navigateToCreateChat}>
+          </StyledListItem>
+          <StyledListItem button onClick={navigateToCreateChat}>
             <ListItemIcon>
               <AddIcon />
             </ListItemIcon>
             <ListItemText primary="Create Chat" />
-          </ListItem>
+          </StyledListItem>
         </List>
-      </Drawer>
+      </StyledDrawer>
     </>
   );
 };
