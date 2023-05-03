@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         //* POST to create a resource
 
         var sqlPost = "INSERT INTO store.Message \
-        INSERT INTO `Message`(sender_id, recipient_id, content, sent_at, group_id) \
+        (sender_id, recipient_id, content, sent_at, group_id) \
         VALUES (?, ?, ?, ?, ?);"
         
         const senderId = req.body['senderId'];
