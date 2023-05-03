@@ -5,6 +5,7 @@ import styles from '@/styles/Chat.module.css';
 import Sidebar from '../components/Sidebar';
 import Channel from '../components/Channel';
 import ChatBox from '../components/ChatBox';
+import Header from '@/components/header';
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -87,6 +88,8 @@ export default function Chat() {
   };
 
   return (
+    <div className = {styles.pageContainer}>
+    <div><Header/></div>
     <Container maxWidth="lg" sx={{ display: 'flex' }}>
       <Sidebar className={styles.sidebar} />
       <Box flexGrow={0} width={200}>
@@ -110,5 +113,6 @@ export default function Chat() {
         )}
       </Box>
     </Container>
+    </div>
   );
 }
