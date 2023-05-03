@@ -43,7 +43,7 @@ useEffect(() => {
       setIds(userIDs);
     }
   });
-}, []);
+});
 
 useEffect(() => {
   console.log(users);
