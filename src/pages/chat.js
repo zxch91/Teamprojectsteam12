@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import MessageList from "../components/messageList";
 import { Container, Box, Typography, TextField } from "@mui/material";
@@ -6,16 +5,7 @@ import styles from "@/styles/Chat.module.css";
 import Sidebar from "../components/Sidebar";
 import Channel from "../components/Channel";
 import ChatBox from "../components/ChatBox";
-=======
-import { useState, useEffect } from 'react';
-import MessageList from '../components/messageList';
-import { Container, Box, Typography, TextField } from '@mui/material';
-import styles from '@/styles/Chat.module.css';
-import Sidebar from '../components/Sidebar';
-import Channel from '../components/Channel';
-import ChatBox from '../components/ChatBox';
-import Header from '@/components/header';
->>>>>>> 9905e2878de6b04dd01d166e06974c13b1fa8887
+import Header from "@/components/header";
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -69,6 +59,7 @@ export default function Chat() {
   }, [channel]);
 
   const sendMessage = async (e) => {
+    e.preventDefault();
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -100,42 +91,46 @@ export default function Chat() {
   };
 
   return (
-<<<<<<< HEAD
-    <Container maxWidth="lg" sx={{ display: "flex" }}>
-=======
-    <div className = {styles.pageContainer}>
-    <div><Header/></div>
-    <Container maxWidth="lg" sx={{ display: 'flex' }}>
->>>>>>> 9905e2878de6b04dd01d166e06974c13b1fa8887
-      <Sidebar className={styles.sidebar} />
-      <Box flexGrow={0} width={200}>
-        <TextField
-          id="chatSearch"
-          label="Chat Search"
-          variant="outlined"
-          sx={{ mt: "10px", mb: "5px" }}
-        />
-        {channel.map((channel) => (
-          <Channel
-            key={channel.id}
-            title={channel.name}
-            onClick={() => handleChannelSelect(channel)}
+    <div className={styles.pageContainer}>
+      <div>
+        <Header />
+      </div>
+      <Container maxWidth="lg" sx={{ display: "flex" }}>
+        <Sidebar className={styles.sidebar} />
+        <Box flexGrow={0} width={200}>
+          <TextField
+            id="chatSearch"
+            label="Chat Search"
+            variant="outlined"
+            sx={{ mt: "10px", mb: "5px" }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-        ))}
-      </Box>
-      <Box flexGrow={1} className={styles.chatContainer}>
-        {selectedChannel && (
-          <ChatBox
-            messages={messages}
-            inputMessage={inputMessage}
-            setInputMessage={setInputMessage}
-            sendMessage={sendMessage}
-            currentUser={"1"}
-            currentChat={selectedChannel.id}
-          />
-        )}
-      </Box>
-    </Container>
+          {channel
+            .filter((channel) =>
+              channel.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((channel) => (
+              <Channel
+                key={channel.id}
+                title={channel.name}
+                onClick={() => handleChannelSelect(channel)}
+              />
+            ))}
+        </Box>
+        <Box flexGrow={1} className={styles.chatContainer}>
+          {selectedChannel && (
+            <ChatBox
+              messages={messages}
+              inputMessage={inputMessage}
+              setInputMessage={setInputMessage}
+              sendMessage={sendMessage}
+              currentUser={"1"}
+              currentChat={selectedChannel.id}
+            />
+          )}
+        </Box>
+      </Container>
     </div>
   );
 }
