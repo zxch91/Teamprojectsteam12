@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-export default function UserChart() {
+export default function UserChart(props) {
   const chartRef = useRef(null);
+  const values = props.values
 
   useEffect(() => {
     let myChart = null;
@@ -11,7 +12,7 @@ export default function UserChart() {
       labels: ['Completed', 'Not Completed'],
       datasets: [
         {
-          data: [2, 8],
+          data: values,
           backgroundColor: ['#0000FF', '#FF0000'],
         },
       ],
@@ -40,9 +41,28 @@ export default function UserChart() {
     };
   }, []);
 
-  return <canvas id="UserChart" ref={chartRef} width="50" height="50" />;
+  useEffect(() => {
+    const canvas = chartRef.current;
+    const container = canvas.parentNode;
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }, []);
 
-
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: '700px',
+        height: '300px',
+        overflow: 'auto',
+        marginBottom: '20px',
+      }}
+    >
+      <canvas id="UserChart" ref={chartRef}/>
+    </div>
+  );
 }
 
 

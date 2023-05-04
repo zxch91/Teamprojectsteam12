@@ -125,8 +125,10 @@ export default function Chat() {
         <Header />
       </div>
       <Container maxWidth="lg" sx={{ display: "flex" }}>
-        <Sidebar className={styles.sidebar} />
-        <Box flexGrow={0} width={200}>
+        <div className="sideBar">
+        <Sidebar />
+        </div>
+        <Box flexGrow={0} width={1} paddingLeft={240}>
           <TextField
             id="chatSearch"
             label="Chat Search"

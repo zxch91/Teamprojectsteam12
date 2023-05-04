@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-export default function TeamTasksChart() {
+export default function TeamTasksChart(props) {
   const chartRef = useRef(null);
+  const values1 = props.values1
+  const values2 = props.values2
 
   useEffect(() => {
     let myChart = null;
@@ -12,12 +14,12 @@ export default function TeamTasksChart() {
       datasets: [
         {
           label: 'Completed',
-          data: [5, 7, 3],
+          data: values1,
           backgroundColor: '#0000FF',
         },
         {
           label: 'Not Completed',
-          data: [2, 4, 6],
+          data: values2,
           backgroundColor: '#FF0000',
         },
       ],
@@ -51,5 +53,26 @@ export default function TeamTasksChart() {
     };
   }, []);
 
-  return <canvas id="TeamTasksChart" ref={chartRef} width="50" height="50" />;
+  useEffect(() => {
+    const canvas = chartRef.current;
+    const container = canvas.parentNode;
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }, []);
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: '700px',
+        height: '300px',
+        overflow: 'auto',
+        marginBottom: '20px',
+      }}
+    >
+      <canvas id="TeamTasksChart" ref={chartRef}/>
+    </div>
+  );
 }
