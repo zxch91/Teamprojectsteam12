@@ -96,9 +96,7 @@ export default function Chat() {
         <Header />
       </div>
       <Container maxWidth="lg" sx={{ display: "flex" }}>
-        <div className="sideBar">
         <Sidebar />
-        </div>
         <Box flexGrow={0} width={1} paddingLeft={240}>
           <TextField
             id="chatSearch"

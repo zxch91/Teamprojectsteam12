@@ -1,32 +1,26 @@
+
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  width: 92%;
+  width: 90%;
   height: 100px;
+  border-bottom: 2px solid black;
   align-items: center;
-  border-bottom: 2px solid black; /* add border style */
+  padding: 0 5%;
+}
+
+.headerElements {
+  width: 50%;
 }
 
 .loggedInContainer {
-  display: flex;
-  align-items: center;
-  margin-right: 50px; /* adjust margin to match the logo margin */
-}
-    
-.headerElements {
   width: 50%;
-  align-items: center;
+  display: flex;
+  justify-content: flex-end; 
 }
 
 .logo {
-  margin-left: 50px;
   height: 50;
   width: 50;
-}
-
-.headerWrapper{
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 

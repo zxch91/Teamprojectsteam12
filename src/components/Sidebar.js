@@ -11,11 +11,10 @@ import styled from 'styled-components';
 
 const StyledDrawer = styled(Drawer)`
   .MuiDrawer-paper {
-    width: 240px  ;
+    width: 240px;
     background-color: #f5f5f5;
-
+    margin-top: 130px;
   }
-
 `;
 
 const StyledListItem = styled(ListItem)`

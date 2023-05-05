@@ -13,19 +13,17 @@ const Header = () => {
       router.push("/index");
     }
      return (
-      <div className={styles.headerWrapper}>
-        <div className = {styles.headerContainer}>
-          <div className = {styles.headerElements}>
-            <div className = {styles.logoContainer}>
-              <a onClick={HomePressed}>
-                <Image src="/Logo.png" width={160} height={35} alt="logo" />
-              </a>
-            </div>   
-          </div>
-          <div className = {styles.loggedInContainer}>
-            
-            <Button>Someone</Button>
-          </div>
+      <div className = {styles.headerContainer}>
+        <div className = {styles.headerElements}>
+          <div className = {styles.logoContainer}>
+            <a onClick={HomePressed}>
+              <Image src="/Logo.png" width={160} height={35} alt="logo" />
+            </a>
+          </div>   
+        </div>
+        <div className = {styles.loggedInContainer}>
+          
+          <Button>Someone</Button>
         </div>
       </div>
       
