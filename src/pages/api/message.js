@@ -6,7 +6,18 @@ export default async function handler(req, res) {
     case "GET":
       //* GET to retrieve a resource
 
-      const sqlGet = "SELECT * FROM store.Message"
+      const group_id = req.query.group_id;
+
+      console.log(req.query);
+
+      console.log(group_id);
+
+      var sqlGet = "SELECT * FROM store.Message where group_id = ?";
+
+
+      sqlGet = mysql.format(sqlGet, [group_id]);
+
+      console.log(sqlGet);
       
       const resultGet = await executeQuery(sqlGet)
       res.status(200).json({ result: resultGet })
@@ -20,10 +31,10 @@ export default async function handler(req, res) {
         VALUES (?, ?, ?, ?, ?);"
         
         const senderId = req.body['senderId'];
-        const recipientId = req.body['recipientId'];
+        const recipientId = req.body['re']; // change this later
         const content = req.body['content']
         const sentAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        const groupId = req.body['groupId']
+        const groupId = req.body['recipientId'];
 
         const insertPost = [senderId, recipientId, content, sentAt, groupId];
         sqlPost = mysql.format(sqlPost, insertPost);

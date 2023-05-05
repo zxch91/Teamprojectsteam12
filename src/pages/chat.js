@@ -20,12 +20,6 @@ export default function Chat() {
       .then((data) => setMessages(data));
   }, []);
 
-  const channels = [
-    { id: 1, title: "Channel 1" },
-    { id: 2, title: "Channel 2" },
-    { id: 3, title: "Channel 3" },
-  ];
-
   var requestOptions = {
     method: "GET",
     redirect: "follow",
@@ -55,8 +49,36 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
+    if (selectedChannel) {
+      fetch(`/api/message?channel=${selectedChannel.id}`)
+        .then((response) => response.json())
+        .then((data) => setMessages(data));
+    }
+  }, [selectedChannel]);
+
+  useEffect(() => {
     console.log(channel);
   }, [channel]);
+
+  const fetchMessages = async (e) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("group_id", selectedChannel.id);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:3000/api/message", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -76,19 +98,26 @@ export default function Chat() {
     };
 
     fetch("http://localhost:3000/api/message", requestOptions)
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
+
+    setInputMessage("");
   };
 
   const handleChannelSelect = (channel) => {
     setSelectedChannel(channel);
-    fetch(`/api/message?channel=${channel.id}`)
-      .then((response) => response.json())
-      .then((data) => setMessages(data));
-    const chat = channel.id;
-    console.log(channel.id);
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    fetch("http://localhost:3000/api/message?group_id=" + channel.id, requestOptions)
+      .then(response => response.text())  
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
   };
+  
 
   return (
     <div className={styles.pageContainer}>
