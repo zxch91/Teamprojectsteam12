@@ -18,10 +18,6 @@ export default function UserChart(props) {
       ],
     };
 
-    if (myChart) {
-      myChart.destroy();
-    }
-
     myChart = new Chart(ctx, {
       type: 'pie',
       data: chartData,
@@ -39,7 +35,7 @@ export default function UserChart(props) {
     return () => {
       myChart.destroy();
     };
-  }, []);
+  }, [values]);
 
   useEffect(() => {
     const canvas = chartRef.current;

@@ -10,16 +10,16 @@ export default function TeamTasksChart(props) {
     let myChart = null;
     const ctx = chartRef.current.getContext('2d');
     const chartData = {
-      labels: ['Team 1', 'Team 2', 'Team 3'],
+      labels: props.Labels,
       datasets: [
         {
           label: 'Completed',
-          data: values1,
+          data: props.values1,
           backgroundColor: '#0000FF',
         },
         {
           label: 'Not Completed',
-          data: values2,
+          data: props.values2,
           backgroundColor: '#FF0000',
         },
       ],
@@ -51,7 +51,7 @@ export default function TeamTasksChart(props) {
     return () => {
       myChart.destroy();
     };
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     const canvas = chartRef.current;

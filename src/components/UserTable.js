@@ -15,32 +15,17 @@ import { CheckBox } from '@mui/icons-material';
     },
 });*/
 
-const rows = [
-    {
-        id:1,
-        name:'John Fred',
-        email:'jojo@makeitall.co.uk',
-        
-    },
-    {
-        id:2,
-        name:'Bob Baker',
-        email:'bob@makeitall.co.uk',
-    },
-    {
-        id:3,
-        name:'Paul Smith',
-        email:'paul@makeitall.co.uk',
-  },
-];
 
-function userTable() {
+function userTable(props) {
     //const classes = userStyles;
+
+    const {rows, setrowInfo} = props
     
     const [selectedRow, setSelectedRow] = useState(null);
 
     const handleRowClick = (event, row) => {
         setSelectedRow(row);
+        setrowInfo(row.id);
     };
 
     return (
