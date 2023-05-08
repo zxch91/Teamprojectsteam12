@@ -3,24 +3,32 @@ import Chart from 'chart.js/auto';
 import styles from '@/styles/Data.module.css';
 import UserTable from '@/components/UserTable';
 import UserChart from '@/components/UserChart';
-import DropDown from '@/components/DropDown'
+import Dropdown from '@/components/Dropdown'
 import TeamTasksChart from '@/components/TeamTasksChart'; // Import the new component
-import build from 'next/dist/build';
+import { SettingsEthernet } from '@mui/icons-material';
 
 export default function DataAnalytics() {
   // ... rest of the code
   const [userType, setUserType] = useState('');
-  const [emps, setEmps] = useState('');
   const [projects, setProjects] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
+  const [emps, setEmps] = useState('');
   const [row_id, setRowInfo] = useState('');
-  const [compValue, setCompValue] = useState('');
-  const [unCompValue, setUnCompValue] = useState('');
+  const [compValue, setCompValue] = useState(0);
+  const [unCompValue, setUnCompValue] = useState(0);
+  const [teamCompleteTasks, setTeamCompleteTasks] = useState(new Array());
+  const [teamUnCompleteTasks, setTeamUnCompleteTasks] = useState(new Array());
+
+
 
   var requestOptions = {
     method: 'GET',
     redirect: 'follow'
-  }
+  };
+
+
+
+
   
   const fetchType = () => {
     return fetch("api/task", requestOptions)
@@ -29,7 +37,14 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
-  const fetchType2 = ({project_id}) => {
+  const fetchType2 = () => {
+    return fetch("api/grabTeams", requestOptions)
+      .then((response) => response.json())
+      .then((result) => result)
+      .catch((error)=> console.log('error', error));
+  }
+
+  const fetchType3 = ({project_id}) => {
     const url = new URL("api/grabEmps", window.location.href);
     url.searchParams.append("projects_id", project_id);
 
@@ -39,15 +54,8 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
-  const fetchType3 = () => {
-    return fetch("api/grabTeams", requestOptions)
-      .then((response) => response.json())
-      .then((result) => result)
-      .catch((error)=> console.log('error', error));
-  }
-
   const fetchType4 = ({user_id, comp}) => {
-    const url = new URL("api/getComplete", window.location.href);
+    const url = new URL("api/grabComplete", window.location.href);
     url.searchParams.append("user_id", user_id);
     url.searchParams.append("comp", comp);
 
@@ -57,9 +65,9 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
-  const fetchType5 = ({project_id, comp}) => {
-    const url = new URL("api/teamCompletions", window.location.href);
-    url.searchParams.append("project_id", project_id);
+  const fetchType5 = ({selected_project_id, comp}) => {
+    const url = new URL("api/grabTeamIsCompleted", window.location.href);
+    url.searchParams.append("selected_project_id", selected_project_id);
     url.searchParams.append("comp", comp);
 
     return fetch(url, requestOptions)
@@ -67,6 +75,7 @@ export default function DataAnalytics() {
       .then((result) => result)
       .catch((error)=> console.log('error', error));
   }
+
 
   useEffect(() => {
     fetchType().then((res) => {
@@ -82,7 +91,7 @@ export default function DataAnalytics() {
   }, [userType]);
 
   useEffect(() => {
-    fetchType3().then((res) => {
+    fetchType2().then((res) => {
       if(res){
         setProjects(res.result);
       }
@@ -94,27 +103,17 @@ export default function DataAnalytics() {
   }, [projects]);
 
   useEffect(() => {
-    console.log(emps);
-  }, [emps]);
-
-  const handleOptionSelect = (event) => {
-    setSelectedOption(event.target.value);
-    setCompValue('');
-    setUnCompValue('');
-  };
-
-  const handleRowId = (rowID) => {
-    setRowInfo(rowID);
-  };
-
-  useEffect(() => {
     console.log(selectedOption);
-    fetchType2({project_id: selectedOption}).then((res) => {
+    fetchType3({project_id: selectedOption}).then((res) => {
       if(res){
         setEmps(res.result);
       }
     });
   }, [selectedOption]);
+
+  useEffect(() => {
+    console.log(emps);
+  }, [emps]);
 
   useEffect(() => {
     if(row_id){
@@ -138,40 +137,58 @@ export default function DataAnalytics() {
     }
 
   }, [row_id]);
- 
-  var buildVals = ({select}) => {
-    if (select == 1){
+
+  useEffect(() => {
+    const grabCompleteArrays = async () => {
+      var promisses = new Array();
       var array1 = new Array();
-      for( var i = 0;i <projects.length;i++){
-        fetchType5({project_id: projects[i].project_id, comp: 1 }).then((res) => {
-          if (res) {
+      for(var i = 0;i<projects.length;i++){
+        const promise = fetchType5({selected_project_id: projects[i].project_id, comp: 1 }).then((res) => {
             array1.push(res.result[0].num);
-          }
         });
+        promisses.push(promise);
       }
-      return array1;
-    }else if (select == 2){
-  
+      await Promise.all(promisses);
+      setTeamCompleteTasks(array1);
+      //console.log(teamCompleteTasks);
+
+      promisses = new Array();
       var array2 = new Array();
-      for( var i = 0;i <projects.length;i++){
-        fetchType5({project_id: projects[i].project_id, comp: 0 }).then((res) => {
-          if (res) {
-            array2.push(res.result[0].num);
-          }
+      for(var i = 0;i<projects.length;i++){
+        const promise = fetchType5({selected_project_id: projects[i].project_id, comp: 0 }).then((res) => {
+          array2.push(res.result[0].num);
         });
+        promisses.push(promise);
       }
-      return array2;
-      }
+      await Promise.all(promisses);
+      setTeamUnCompleteTasks(array2);
+      //console.log(teamUnCompleteTasks);
   }
+  grabCompleteArrays();
+  }, [projects]);
+
+
+
+  const handleRowId = (rowID) => {
+    setRowInfo(rowID);
+  };
 
   var buildTable = () => {
-      var array  =  new Array();
-      for( var i = 0;i <emps.length;i++){
-          var row = {id:emps[i].user_id,name:emps[i].username,email:emps[i].email};
-          array.push(row);
-      }
-      return array;
-  }
+    var array  =  new Array();
+    for( var i = 0;i <emps.length;i++){
+        var row = {id:emps[i].user_id,name:emps[i].username,email:emps[i].email};
+        array.push(row);
+    }
+    return array;
+}
+
+
+
+  const handleOptionSelect = (event) => {
+    setSelectedOption(event.target.value);
+    setCompValue(0);
+    setUnCompValue(0);
+  };
 
   var genOptions = () =>{
     var array = new Array();
@@ -181,10 +198,34 @@ export default function DataAnalytics() {
     return array;
   }
 
-  var createLabels = () => {
+  
+
+  var buildUserChartArray = () => {
+    return [compValue, unCompValue];
+  }
+
+
+
+  var buildLabelsArray = () => {
     var array = new Array();
     for( var i = 0;i <projects.length;i++){
       array.push(projects[i].project_name);
+    }
+    return array;
+  }
+
+  var buildTeamCompleteArray = () => {
+    var array =  new Array();
+    for(var i = 0;i<teamCompleteTasks.length;i++){
+      array.push(teamCompleteTasks[i]);
+    }
+    return array;
+  }
+
+  var buildTeamUnCompleteArray = () => {
+    var array =  new Array();
+    for(var i = 0;i<teamUnCompleteTasks.length;i++){
+      array.push(teamUnCompleteTasks[i]);
     }
     return array;
   }
@@ -195,8 +236,8 @@ export default function DataAnalytics() {
       <div>
         <div style={{ textAlign: 'center' }}>
           <h1>All Teams</h1>
-          <DropDown onOptionSelect={handleOptionSelect} options={genOptions()}/>
-          <div><UserTable rows={buildTable()} setrowInfo={handleRowId}/></div>
+          <Dropdown onOptionSelect={handleOptionSelect} options={genOptions()}/>
+          <UserTable rows={buildTable()} setrowInfo={handleRowId}/>
         </div>
         <div>
           <div
@@ -210,12 +251,12 @@ export default function DataAnalytics() {
             
             <div className={styles.chartContainer}>
               <h2>Team Progress</h2>
-              <UserChart values={[compValue,unCompValue]}/>
+              <UserChart values={buildUserChartArray()}/>
             
             </div>
             <div className={styles.chartContainer}>
               <h2>Team Tasks</h2>
-              <TeamTasksChart Labels={createLabels()} values1={buildVals(1)} values2={buildVals(2)}/>
+              <TeamTasksChart Labels = {buildLabelsArray()} values1={buildTeamCompleteArray()} values2={buildTeamUnCompleteArray()}/>
             
             </div>
           </div>
