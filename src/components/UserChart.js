@@ -6,36 +6,69 @@ export default function UserChart(props) {
   const values = props.values
 
   useEffect(() => {
-    let myChart = null;
-    const ctx = chartRef.current.getContext('2d');
-    const chartData = {
-      labels: ['Completed', 'Not Completed'],
-      datasets: [
-        {
-          data: values,
-          backgroundColor: ['#0000FF', '#FF0000'],
-        },
-      ],
-    };
-
-    myChart = new Chart(ctx, {
-      type: 'pie',
-      data: chartData,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'top',
+    if (props.showChart){
+      let myChart = null;
+      const ctx = chartRef.current.getContext('2d');
+      const chartData = {
+        labels: ['Completed', 'Not Completed'],
+        datasets: [
+          {
+            data: values,
+            backgroundColor: ['#0000FF', '#FF0000'],
+          },
+        ],
+      };
+    
+      myChart = new Chart(ctx, {
+        type: 'pie',
+        data: chartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
           },
         },
-      },
-    });
+      });
 
-    return () => {
-      myChart.destroy();
-    };
-  }, [values]);
+      return () => {
+        myChart.destroy();
+      };
+    }else{
+      let myChart = null;
+      const ctx = chartRef.current.getContext('2d');
+      const chartData = {
+        labels: ['Completed', 'Not Completed'],
+        datasets: [
+          {
+            data: [0,0],
+            backgroundColor: ['#0000FF', '#FF0000'],
+          },
+        ],
+      };
+    
+      myChart = new Chart(ctx, {
+        type: 'pie',
+        data: chartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
+
+      return () => {
+        myChart.destroy();
+      };
+    }
+
+  }, [props]);
 
   useEffect(() => {
     const canvas = chartRef.current;
