@@ -8,7 +8,7 @@ import TeamTasksChart from '@/components/TeamTasksChart'; // Import the new comp
 import { SettingsEthernet } from '@mui/icons-material';
 
 export default function DataAnalytics() {
-  // ... define variable arrays
+  // ... rest of the code
   const [userType, setUserType] = useState('');
   const [projects, setProjects] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
@@ -16,16 +16,18 @@ export default function DataAnalytics() {
   const [row_id, setRowInfo] = useState('');
   const [compValue, setCompValue] = useState(0);
   const [unCompValue, setUnCompValue] = useState(0);
-  const [currentCompValue, setCurrentCompValue] = useState(0);
-  const [currentUncompValue, setCurrentUncompValue] = useState(0);
   const [teamCompleteTasks, setTeamCompleteTasks] = useState(new Array());
   const [teamUnCompleteTasks, setTeamUnCompleteTasks] = useState(new Array());
+
 
 
   var requestOptions = {
     method: 'GET',
     redirect: 'follow'
   };
+
+
+
 
   
   const fetchType = () => {
@@ -74,16 +76,6 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
-  const fetchUserStats = ({user_id, comp}) => {
-    const url = new URL("api/grabCurrentUserStats", window.location.href);
-    url.searchParams.append("user_id", user_id);
-    url.searchParams.append("comp", comp);
-
-    return fetch(url, requestOptions)
-      .then((response) => response.json())
-      .then((result) => result)
-      .catch((error)=> console.log('error', error));
-  }
 
   useEffect(() => {
     fetchType().then((res) => {
@@ -123,8 +115,6 @@ export default function DataAnalytics() {
     console.log(emps);
   }, [emps]);
 
-
-
   useEffect(() => {
     if(row_id){
     
@@ -147,30 +137,6 @@ export default function DataAnalytics() {
     }
 
   }, [row_id]);
-
-
-  useEffect(() => {
-    if(row_id){
-    
-      const promise1 = fetchUserStats({user_id: row_id, comp: 0 }).then((res) => {
-        if (res) {
-          setCurrentUncompValue(res.result[0].num);
-        }
-      });
-    
-      const promise2 = fetchUserStats({user_id: row_id, comp: 1}).then((res) => {
-        if (res) {
-          setCurrentCompValue(res.result[0].num);
-        }
-      });
-    
-      Promise.all([promise1, promise2]).catch((error) => {
-        console.log('Error:', error);
-      });
-      
-    }
-
-  }, [row_id])
 
   useEffect(() => {
     const grabCompleteArrays = async () => {
@@ -214,7 +180,7 @@ export default function DataAnalytics() {
         array.push(row);
     }
     return array;
-  }
+}
 
 
 
@@ -238,10 +204,6 @@ export default function DataAnalytics() {
     return [compValue, unCompValue];
   }
 
-  var buildCurrentUserChart = () => {
-    console.log(currentCompValue,currentUncompValue);
-    return [currentCompValue, currentUncompValue];
-  }
 
 
   var buildLabelsArray = () => {
@@ -304,31 +266,6 @@ export default function DataAnalytics() {
   } else if (userType == "leader"){
 
   } else if (userType == "emp"){
-    return (
-      //Employee HTML//
-      <div>
-        <div style={{ textAlign: 'center' }}>
-          <h1>Your Progress</h1>
-      </div>
-      <div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'nowrap', // change this to 'nowrap'
-            alignItems: 'center',
-          }}
-        >
-        
-        <div className={styles.chartContainer}>
-
-          <UserChart values={buildCurrentUserChart()}/>
-        
-        </div>
-      </div>
-      </div>
-      </div>
-    );
 
   } else {
     //redirect to login
