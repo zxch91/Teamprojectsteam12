@@ -4,8 +4,8 @@ const mysql = require('mysql2');
 export default async function handler(req, res) {
   switch(req.method) {
     case "GET":
-      //* GET to retrieve a resource !!!!!!!!!! need to change user_id = ### to user_id = SESSION !!!!!!!!!!
-      const sqlGet = "SELECT user_type FROM store.User WHERE user_id = 1"
+      //* GET to retrieve a resource
+      const sqlGet = "SELECT user_type, user_id FROM store.User WHERE user_id = 1"
       
       const resultGet = await executeQuery(sqlGet)
       res.status(200).json({ result: resultGet })
