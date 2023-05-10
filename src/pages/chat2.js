@@ -120,6 +120,8 @@ function Chat() {
       .catch((error) => console.log("error", error));
   };
 
+  // ... (rest of the code)
+
   return (
     <div className={styles.chatContainer}>
       <Header />
@@ -152,9 +154,10 @@ function Chat() {
             className={styles.chatBox}
             sx={{
               position: "fixed",
+              right: "-45px",
               bottom: "16px",
-              right: "-30px",
-              overflowY: "auto", // Make the chatbox scrollable
+              overflowY: "scroll", // Make the chatbox scrollable
+              height: "calc(100vh - 120px)", // Set the height relative to the viewport height
             }}
           >
             {selectedChannel && (
