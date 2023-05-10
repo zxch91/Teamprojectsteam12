@@ -124,14 +124,13 @@ export default function Chat() {
       <div>
         <Header />
       </div>
-      <Container maxWidth="lg" sx={{ display: "flex" }}>
-        <Sidebar2 />
-        <Box flexGrow={0} width={1} paddingLeft={240}>
+      <Container maxWidth="lg" sx={{ display: 'flex' }}>
+        <Box sx={{ width: '25%' }}>
           <TextField
             id="chatSearch"
             label="Chat Search"
             variant="outlined"
-            sx={{ mt: "10px", mb: "5px" }}
+            sx={{ mt: '10px', mb: '5px' }}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -147,14 +146,14 @@ export default function Chat() {
               />
             ))}
         </Box>
-        <Box flexGrow={1} className={styles.chatContainer}>
+        <Box sx={{ width: '75%' }}>
           {selectedChannel && (
             <ChatBox
               messages={messages}
               inputMessage={inputMessage}
               setInputMessage={setInputMessage}
               sendMessage={sendMessage}
-              currentUser={"1"}
+              currentUser={'1'}
               currentChat={selectedChannel.id}
             />
           )}
@@ -162,4 +161,4 @@ export default function Chat() {
       </Container>
     </div>
   );
-}
+};

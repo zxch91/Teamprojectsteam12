@@ -17,7 +17,7 @@ function MessageList({ messages }) {
               message.sender === currentUser ? styles.sender : ''
             }`}
           >
-            <span className={styles.messageItem}>{message.text}</span>
+            <span className={styles.messageItem}>{message}</span>
           </div>
         </ListItem>
       ))}

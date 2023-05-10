@@ -108,16 +108,14 @@ function Chat() {
 
   const handleChannelSelect = (channel) => {
     setSelectedChannel(channel);
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
-    };
-    
-    fetch("http://localhost:3000/api/message?group_id=" + channel.id, requestOptions)
-      .then(response => response.text())  
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    fetch(`http://localhost:3000/api/message?group_id=${channel.id}`)
+      .then((response) => response.json())
+      .then((result) => {
+        setMessages(result.result);
+      })
+      .catch((error) => console.log('error', error));
   };
+  
   
   return (
     <div className={styles.chatContainer}>
@@ -125,7 +123,7 @@ function Chat() {
       <Sidebarv2 />
       <div className={styles.mainContent}>
         <Container maxWidth="lg" sx={{ display: "flex" }}>
-          <Box flexGrow={1} className={styles.chatContainer}>
+          <Box flexGrow={1} className={styles.chatList}>
             <TextField
               id="chatSearch"
               label="Chat Search"
@@ -134,17 +132,15 @@ function Chat() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            {channel
-              .filter((channel) =>
-                channel.name.toLowerCase().includes(search.toLowerCase())
-              )
-              .map((channel) => (
-                <Channel
-                  key={channel.id}
-                  title={channel.name}
-                  onClick={() => handleChannelSelect(channel)}
-                />
-              ))}
+            {channel.map((channel) => (
+              <Channel
+                key={channel.id}
+                title={channel.name}
+                onClick={() => handleChannelSelect(channel)}
+              />
+            ))}
+          </Box>
+          <Box flexGrow={1} className={styles.chatBox}>
             {selectedChannel && (
               <ChatBox
                 messages={messages}
@@ -160,7 +156,6 @@ function Chat() {
       </div>
     </div>
   );
-  
-}
+};
 
-export default Chat
+export default Chat;
