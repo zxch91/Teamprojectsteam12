@@ -347,6 +347,7 @@ export default function DataAnalytics() {
     return (
                 //ADMIN HTML//
       <div>
+        
         <div style={{ textAlign: 'center' }}>
           <h1>All Teams</h1>
           <div style={{
@@ -382,19 +383,29 @@ export default function DataAnalytics() {
             
             </div>
           </div>
-          <div styles={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexWrap: 'nowrap',
-              alignItems: 'center',
-              position: 'absolute', // add this line
-              top: '50%', // add this line
-              left: '50%', // add this line
-              transform: 'translate(-50%, -50%)', // add this line
-            }} >
-          <div className={styles.chartContainer}>
-              <h2>Team Tasks</h2>
-              <TeamTasksChart Labels = {buildLabelsArray()} values1={buildTeamCompleteArray()} values2={buildTeamUnCompleteArray()}/>
+          
+          <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'nowrap',
+          alignItems: 'center',
+        }}
+        className={styles.chartContainer}
+      >
+        <div
+          style={{
+            textAlign: 'center',
+            position: 'absolute',
+            marginTop:'30%',
+          }}
+        >
+          <h2>Team Tasks</h2>
+          <TeamTasksChart
+            Labels={buildLabelsArray()}
+            values1={buildTeamCompleteArray()}
+            values2={buildTeamUnCompleteArray()}
+          />
             
             </div>
           </div>
