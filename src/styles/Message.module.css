@@ -1,22 +1,27 @@
 .messageItem {
-    background-color: #0b93f6;
-    color: white;
-    border-radius: 15px;
-    padding: 10px;
-    display: inline-block;
-    max-width: 70%;
-    word-break: break-word;
-    white-space: pre-wrap;
-    margin-bottom: 8px;
-  }
-  
-  .messageWrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 5px;
-  }
-  
-  .messageWrapper.sender {
-    justify-content: flex-start;
-  }
-  
+  background-color: #0b93f6;
+  color: white;
+  border-radius: 15px;
+  padding: 10px;
+  display: inline-block;
+  max-width: 70%;
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+}
+
+.messageWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.messageWrapper.sender {
+  justify-content: flex-start;
+  background-color: #e5e5e5;
+  color: #333333;
+}
+
+.sender .messageItem {
+  background-color: #4a90e2;
+}

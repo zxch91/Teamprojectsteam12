@@ -5,9 +5,9 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 const Channel = ({ title, onClick }) => {
-  {return (
-    
-    <Card onClick={onClick}
+  return (
+    <Card
+      onClick={onClick}
       sx={{
         cursor: "pointer",
         width: "100%",
@@ -16,10 +16,14 @@ const Channel = ({ title, onClick }) => {
         boxShadow: "none",
         borderRadius: 0,
         overflow: "hidden",
+        transition: "box-shadow 0.3s ease, transform 0.3s ease",
+        "&:hover": {
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1)",
+          transform: "translateY(-4px)",
+        },
       }}
       variant="outlined"
     >
-      
       <CardContent sx={{ padding: "20px" }}>
         <Typography
           variant="h6"
@@ -39,7 +43,7 @@ const Channel = ({ title, onClick }) => {
         </Typography>
       </CardContent>
     </Card>
-  );}
+  );
 };
 
 export default Channel;

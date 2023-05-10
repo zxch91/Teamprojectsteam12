@@ -135,13 +135,17 @@ function Chat() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            {channel.map((channel) => (
-              <Channel
-                key={channel.id}
-                title={channel.name}
-                onClick={() => handleChannelSelect(channel)}
-              />
-            ))}
+            {channel
+              .filter((c) =>
+                c.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((channel) => (
+                <Channel
+                  key={channel.id}
+                  title={channel.name}
+                  onClick={() => handleChannelSelect(channel)}
+                />
+              ))}
           </Box>
           <Box
             flexGrow={1}
