@@ -6,7 +6,7 @@ import CreateChat from "@/pages/create-chat";
 function Sidebarv2() {
 
   const navigateToViewChats = () => {
-    router.push('/chat');
+    router.push('/chat2');
   };
 
   const navigateToCreateChat = () => {
