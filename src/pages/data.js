@@ -18,6 +18,8 @@ export default function DataAnalytics() {
   const [row_id, setRowInfo] = useState('');
   const [compValue, setCompValue] = useState(0);
   const [unCompValue, setUnCompValue] = useState(0);
+  const [userCompValue, setUserCompValue] = useState(0);
+  const [userUnCompValue, setUserUnCompValue] = useState(0);
   const [teamCompleteTasks, setTeamCompleteTasks] = useState(new Array());
   const [teamUnCompleteTasks, setTeamUnCompleteTasks] = useState(new Array());
   const [showChart, setShowChart] = useState(true);
@@ -101,6 +103,18 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
+  const fetchType8 = ({user_id, comp, project_id}) => {
+    const url = new URL("api/grabTeamUserTasks", window.location.href);
+    url.searchParams.append("user_id", user_id);
+    url.searchParams.append("comp", comp);
+    url.searchParams.append("project_id", project_id);
+
+    return fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((result) => result)
+      .catch((error)=> console.log('error', error));
+  }
+
 
   useEffect(() => {
     fetchType().then((res) => {
@@ -177,19 +191,31 @@ export default function DataAnalytics() {
   useEffect(() => {
       if(row_id){
         var getComp = async (row_id) => {
-          const promise1 = fetchType4({user_id: row_id, comp: 0 }).then((res) => {
+          const promise1 = fetchType8({user_id: row_id, comp: 0 , project_id: selectedOption}).then((res) => {
             if (res) {
               setUnCompValue(res.result[0].num);
             }
           });
         
-          const promise2 = fetchType4({user_id: row_id, comp: 1}).then((res) => {
+          const promise2 = fetchType8({user_id: row_id, comp: 1, project_id: selectedOption}).then((res) => {
             if (res) {
               setCompValue(res.result[0].num);
             }
           });
+
+          const promise3 = fetchType4({user_id: row_id, comp: 0}).then((res) => {
+            if (res) {
+              setUserUnCompValue(res.result[0].num);
+            }
+          });
         
-          await Promise.all([promise1, promise2]).catch((error) => {
+          const promise4 = fetchType4({user_id: row_id, comp: 1}).then((res) => {
+            if (res) {
+              setUserCompValue(res.result[0].num);
+            }
+          });
+        
+          await Promise.all([promise1, promise2, promise3, promise4]).catch((error) => {
             console.log('Error:', error);
           });
         }
@@ -287,6 +313,10 @@ export default function DataAnalytics() {
     return [compValue, unCompValue];
   }
 
+  var buildUserChartArray2 = () => {
+    return [userCompValue, userUnCompValue];
+  }
+
 
 
   var buildLabelsArray = () => {
@@ -347,6 +377,22 @@ export default function DataAnalytics() {
             
             </div>
             <div className={styles.chartContainer}>
+              <h2>Overall User Progress</h2>
+              <UserChart values={buildUserChartArray2()} showChart={showChart}/>
+            
+            </div>
+          </div>
+          <div styles={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexWrap: 'nowrap',
+              alignItems: 'center',
+              position: 'absolute', // add this line
+              top: '50%', // add this line
+              left: '50%', // add this line
+              transform: 'translate(-50%, -50%)', // add this line
+            }} >
+          <div className={styles.chartContainer}>
               <h2>Team Tasks</h2>
               <TeamTasksChart Labels = {buildLabelsArray()} values1={buildTeamCompleteArray()} values2={buildTeamUnCompleteArray()}/>
             
