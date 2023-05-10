@@ -13,7 +13,14 @@ const ChatBox = ({ messages, inputMessage, setInputMessage, sendMessage }) => {
   console.log(contentArray);
 
   return (
-    <>
+    <Box
+      sx={{
+        backgroundColor: "#F6F6F6",
+        borderRadius: "8px",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1)",
+        padding: "16px",
+      }}
+    >
       <Box className={styles.messageList}>
         <MessageList messages={contentArray} />
       </Box>
@@ -23,13 +30,33 @@ const ChatBox = ({ messages, inputMessage, setInputMessage, sendMessage }) => {
           variant="outlined"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
-          sx={{ marginBottom: "1rem" }}
+          sx={{
+            marginBottom: "1rem",
+            backgroundColor: "#ffffff",
+            borderRadius: "4px",
+          }}
+          InputProps={{
+            style: {
+              padding: "12px",
+            },
+          }}
         />
-        <Button fullWidth variant="contained" type="submit">
+        <Button
+          fullWidth
+          variant="contained"
+          type="submit"
+          sx={{
+            backgroundColor: "#4A154B",
+            color: "#ffffff",
+            "&:hover": {
+              backgroundColor: "#6e1a6e",
+            },
+          }}
+        >
           Send
         </Button>
       </form>
-    </>
+    </Box>
   );
 };
 

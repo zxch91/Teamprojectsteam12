@@ -154,7 +154,7 @@ function Chat() {
             className={styles.chatBox}
             sx={{
               position: "fixed",
-              right: "-45px",
+              right: "-100px",
               bottom: "16px",
               overflowY: "scroll", // Make the chatbox scrollable
               height: "calc(100vh - 120px)", // Set the height relative to the viewport height
