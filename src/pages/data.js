@@ -90,6 +90,17 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
+  const fetchType7 = ({user_id, comp}) => {
+    const url = new URL("api/grabCurrentUserStats", window.location.href);
+    url.searchParams.append("user_id", user_id);
+    url.searchParams.append("comp", comp);
+
+    return fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((result) => result)
+      .catch((error)=> console.log('error', error));
+  }
+
 
   useEffect(() => {
     fetchType().then((res) => {
@@ -103,6 +114,7 @@ export default function DataAnalytics() {
 
   useEffect(() => {
     console.log(userType);
+    console.log(userID);
   }, [userType]);
 
   useEffect(() => {
@@ -163,15 +175,39 @@ export default function DataAnalytics() {
   }, [emps]);
 
   useEffect(() => {
-    if(row_id){
-      var getComp = async (row_id) => {
-        const promise1 = fetchType4({user_id: row_id, comp: 0 }).then((res) => {
+      if(row_id){
+        var getComp = async (row_id) => {
+          const promise1 = fetchType4({user_id: row_id, comp: 0 }).then((res) => {
+            if (res) {
+              setUnCompValue(res.result[0].num);
+            }
+          });
+        
+          const promise2 = fetchType4({user_id: row_id, comp: 1}).then((res) => {
+            if (res) {
+              setCompValue(res.result[0].num);
+            }
+          });
+        
+          await Promise.all([promise1, promise2]).catch((error) => {
+            console.log('Error:', error);
+          });
+        }
+        getComp(row_id);
+      }
+
+  }, [row_id]);
+
+  useEffect(() => {
+    if (userType == "emp"){
+      var getComp = async () => {
+        const promise1 = fetchType7({user_id: userID, comp: 0 }).then((res) => {
           if (res) {
             setUnCompValue(res.result[0].num);
           }
         });
       
-        const promise2 = fetchType4({user_id: row_id, comp: 1}).then((res) => {
+        const promise2 = fetchType7({user_id: userID, comp: 1}).then((res) => {
           if (res) {
             setCompValue(res.result[0].num);
           }
@@ -181,10 +217,9 @@ export default function DataAnalytics() {
           console.log('Error:', error);
         });
       }
-      getComp(row_id);
+      getComp();
     }
-
-  }, [row_id]);
+  }, [userType]);
 
   useEffect(() => {
     const grabCompleteArrays = async () => {
@@ -354,6 +389,22 @@ export default function DataAnalytics() {
       </div>
       );
   } else if (userType == "emp"){
+
+    return(<div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'nowrap', // change this to 'nowrap'
+          alignItems: 'center',
+        }}
+      >
+        <div className={styles.chartContainer}>
+        <h2>Team Progress</h2>
+        <UserChart values={buildUserChartArray()} showChart={showChart}/>
+        
+        </div>
+
+      </div>);
 
   } else {
     //redirect to login
