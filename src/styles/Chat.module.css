@@ -1,24 +1,3 @@
 .chatContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin-right: 1000px;
-  }
-  
-  .messageList {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-  }
-
-  .sideBar {
-    background-color: red;
-  }
-  
-  .chatWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
+  height: 100%;
+}

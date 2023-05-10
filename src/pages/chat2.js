@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import MessageList from "../components/messageList";
 import { Container, Box, Typography, TextField } from "@mui/material";
 import styles from "@/styles/Chat.module.css";
-import Sidebar2 from "@/components/Sidebar2";
 import Channel from "../components/Channel";
 import ChatBox from "../components/ChatBox";
 import Header from "@/components/header";
+import Sidebarv2 from "@/components/Sidebar2";
+import { useRouter } from 'next/router';
 
-export default function Chat() {
+function Chat() {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [selectedChannel, setSelectedChannel] = useState(false);
@@ -118,48 +119,48 @@ export default function Chat() {
       .catch(error => console.log('error', error));
   };
   
-
   return (
-    <div className={styles.pageContainer}>
-      <div>
-        <Header />
-      </div>
-      <Container maxWidth="lg" sx={{ display: "flex" }}>
-        <Sidebar2 />
-        <Box flexGrow={0} width={1} paddingLeft={240}>
-          <TextField
-            id="chatSearch"
-            label="Chat Search"
-            variant="outlined"
-            sx={{ mt: "10px", mb: "5px" }}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {channel
-            .filter((channel) =>
-              channel.name.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((channel) => (
-              <Channel
-                key={channel.id}
-                title={channel.name}
-                onClick={() => handleChannelSelect(channel)}
-              />
-            ))}
-        </Box>
-        <Box flexGrow={1} className={styles.chatContainer}>
-          {selectedChannel && (
-            <ChatBox
-              messages={messages}
-              inputMessage={inputMessage}
-              setInputMessage={setInputMessage}
-              sendMessage={sendMessage}
-              currentUser={"1"}
-              currentChat={selectedChannel.id}
+    <div className={styles.chatContainer}>
+      <Header />
+      <Sidebarv2 />
+      <div className={styles.mainContent}>
+        <Container maxWidth="lg" sx={{ display: "flex" }}>
+          <Box flexGrow={1} className={styles.chatContainer}>
+            <TextField
+              id="chatSearch"
+              label="Chat Search"
+              variant="outlined"
+              sx={{ mt: "120px", mb: "5px" }}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-          )}
-        </Box>
-      </Container>
+            {channel
+              .filter((channel) =>
+                channel.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((channel) => (
+                <Channel
+                  key={channel.id}
+                  title={channel.name}
+                  onClick={() => handleChannelSelect(channel)}
+                />
+              ))}
+            {selectedChannel && (
+              <ChatBox
+                messages={messages}
+                inputMessage={inputMessage}
+                setInputMessage={setInputMessage}
+                sendMessage={sendMessage}
+                currentUser={"1"}
+                currentChat={selectedChannel.id}
+              />
+            )}
+          </Box>
+        </Container>
+      </div>
     </div>
   );
+  
 }
+
+export default Chat

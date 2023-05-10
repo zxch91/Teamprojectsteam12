@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Sidebar from '../components/Sidebar';
+import Sidebarv2 from '@/components/Sidebar2';
 import styles from '@/styles/Chat.module.css';
 import TextField from '@mui/material/TextField';
 
@@ -77,7 +77,7 @@ const handleCreateChat = () => {
 
   return (
     <Container maxWidth="lg" sx={{ display: 'flex' }}>
-      <Sidebar className={styles.sidebar} />
+      <Sidebarv2  />
       <Box flexGrow={1} className={styles.chatContainer}>
         <Typography variant="h4" gutterBottom>
           Create Chat

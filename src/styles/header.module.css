@@ -1,6 +1,6 @@
-
 .headerContainer {
   display: flex;
+  position: fixed;
   justify-content: space-between;
   width: 90%;
   height: 100px;
@@ -23,4 +23,4 @@
   height: 50;
   width: 50;
 }
-
+  

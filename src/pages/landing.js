@@ -2,6 +2,7 @@ import React from "react";
 import Router from "next/router";
 import styles from '@/styles/Landing.module.css';
 import chat from '../resources/chat.png';
+import Chat from "./chat2";
 import { Button, TextField, Typographys } from '@mui/material';
 import Header from "@/components/header";
 import { useRouter } from "next/router";
@@ -17,7 +18,7 @@ const Landing = () => {
   }
 
   const handleChatButton = () => {
-    router.push("/chat");
+    router.push("/chat2");
   };
 
   const dataAnalyticsClicked = () => {
