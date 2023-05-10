@@ -6,7 +6,7 @@ import Channel from "../components/Channel";
 import ChatBox from "../components/ChatBox";
 import Header from "@/components/header";
 import Sidebarv2 from "@/components/Sidebar2";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 function Chat() {
   const [messages, setMessages] = useState([]);
@@ -48,14 +48,6 @@ function Chat() {
       }
     });
   }, []);
-
-  useEffect(() => {
-    if (selectedChannel) {
-      fetch(`/api/message?channel=${selectedChannel.id}`)
-        .then((response) => response.json())
-        .then((data) => setMessages(data));
-    }
-  }, [selectedChannel]);
 
   useEffect(() => {
     console.log(channel);
@@ -100,7 +92,19 @@ function Chat() {
 
     fetch("http://localhost:3000/api/message", requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result);
+
+        // Add the new message to the messages state
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            senderId: "1",
+            recipientId: selectedChannel.id,
+            content: inputMessage,
+          },
+        ]);
+      })
       .catch((error) => console.log("error", error));
 
     setInputMessage("");
@@ -113,10 +117,9 @@ function Chat() {
       .then((result) => {
         setMessages(result.result);
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   };
-  
-  
+
   return (
     <div className={styles.chatContainer}>
       <Header />
@@ -140,7 +143,16 @@ function Chat() {
               />
             ))}
           </Box>
-          <Box flexGrow={1} className={styles.chatBox}>
+          <Box
+            flexGrow={1}
+            className={styles.chatBox}
+            sx={{
+              position: "fixed",
+              bottom: "16px",
+              right: "-30px",
+              overflowY: "auto", // Make the chatbox scrollable
+            }}
+          >
             {selectedChannel && (
               <ChatBox
                 messages={messages}
@@ -156,6 +168,6 @@ function Chat() {
       </div>
     </div>
   );
-};
+}
 
 export default Chat;
