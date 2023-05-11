@@ -7,9 +7,14 @@ import Dropdown from '@/components/Dropdown';
 import Percentage from '@/components/Percentage';
 import TeamTasksChart from '@/components/TeamTasksChart'; // Import the new component
 import { SettingsEthernet } from '@mui/icons-material';
+import Cookies from 'js-cookie';
 
 export default function DataAnalytics() {
-  // ... rest of the code
+  
+  //RETRIEVE COOKIES
+  const retrievedUserId = Cookies.get("user_id");
+
+  //DEFINE VARIABLES
   const [userType, setUserType] = useState('');
   const [userID, setUserID] = useState(0);
   const [projects, setProjects] = useState('');
@@ -24,6 +29,7 @@ export default function DataAnalytics() {
   const [teamUnCompleteTasks, setTeamUnCompleteTasks] = useState(new Array());
   const [showChart, setShowChart] = useState(true);
   const [percentage, setPercentage] = useState(0);
+  
 
 
 
@@ -35,14 +41,17 @@ export default function DataAnalytics() {
 
 
 
-  
+  //CURRENT USER
   const fetchType = () => {
-    return fetch("api/task", requestOptions)
-      .then((response) => response.json())
-      .then((result) => result)
-      .catch((error)=> console.log('error', error));
-  }
+    return fetch(`/api/task?user_id=${retrievedUserId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
 
+  //GRAB TEAMS FOR DROPDOWN
   const fetchType2 = () => {
     return fetch("api/grabTeams", requestOptions)
       .then((response) => response.json())
@@ -50,6 +59,7 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
+  //GRAB USERS FOR SELECTED TEAM
   const fetchType3 = ({project_id}) => {
     const url = new URL("api/grabEmps", window.location.href);
     url.searchParams.append("projects_id", project_id);
@@ -59,6 +69,7 @@ export default function DataAnalytics() {
       .then((result) => result)
       .catch((error)=> console.log('error', error));
   }
+
 
   const fetchType4 = ({user_id, comp}) => {
     const url = new URL("api/grabComplete", window.location.href);
@@ -70,6 +81,8 @@ export default function DataAnalytics() {
       .then((result) => result)
       .catch((error)=> console.log('error', error));
   }
+
+  
 
   const fetchType5 = ({selected_project_id, comp}) => {
     const url = new URL("api/grabTeamIsCompleted", window.location.href);
@@ -94,7 +107,7 @@ export default function DataAnalytics() {
 
   const fetchType7 = ({user_id, comp}) => {
     const url = new URL("api/grabCurrentUserStats", window.location.href);
-    url.searchParams.append("user_id", user_id);
+    url.searchParams.append("user_id", retrievedUserId);
     url.searchParams.append("comp", comp);
 
     return fetch(url, requestOptions)
@@ -119,10 +132,11 @@ export default function DataAnalytics() {
   useEffect(() => {
     fetchType().then((res) => {
       if (res) {
-        setUserType(res.result[0].user_type);
-        setUserID(res.result[0].user_id);
+        res.json().then((data) => {
+          console.log("Response data:", data); // Log the response data
+          setUserType(data.result[0].user_type);
+        });
       }
-      
     });
   }, []);
 

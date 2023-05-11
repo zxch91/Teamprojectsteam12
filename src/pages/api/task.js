@@ -1,17 +1,22 @@
 import executeQuery from "./db.js"
+import Cookies from "js-cookie";
 const mysql = require('mysql2');
 
 export default async function handler(req, res) {
   switch(req.method) {
     case "GET":
+      // Get the user_id from the query parameters
+      let retrievedUserId = parseInt(req.query["user_id"]);
+
       //* GET to retrieve a resource
-      const sqlGet = "SELECT user_type, user_id FROM store.User WHERE user_id = 1"
-      
+      let sqlGet = "SELECT user_type FROM `User` WHERE user_id = ?;";
+
+      sqlGet = mysql.format(sqlGet, [retrievedUserId]);
+      console.log(sqlGet);
       const resultGet = await executeQuery(sqlGet)
-      res.status(200).json({ result: resultGet })
+
+      res.status(200).json({ result: resultGet });
       break;
-
-
       
       
       case "POST":
