@@ -2,6 +2,7 @@ import React from "react";
 import Router from "next/router";
 import { useRouter } from 'next/router';
 import styles from '@/styles/Header.module.css';
+import Landing from "@/pages/landing";
 import Image from 'next/image';
 import { Button, TextField, Typographys } from '@mui/material';
 
@@ -10,7 +11,7 @@ const Header = () => {
     const router = useRouter();
 
     const HomePressed = () => {
-      router.push("/index");
+      router.push("/landing");
     }
      return (
       <div className = {styles.headerContainer}>
