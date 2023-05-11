@@ -383,7 +383,7 @@ export default function DataAnalytics() {
           >
             
             <div className={styles.chartContainer}>
-              <h2>Team Progress</h2>
+              <h2>User Progress</h2>
               <UserChart values={buildUserChartArray()} showChart={showChart}/>
             
             </div>
@@ -442,7 +442,7 @@ export default function DataAnalytics() {
       >
         
         <div className={styles.chartContainer}>
-          <h2>Team Progress</h2>
+          <h2>User Progress</h2>
           <UserChart values={buildUserChartArray()} showChart={showChart}/>
         
         </div>
@@ -466,7 +466,7 @@ export default function DataAnalytics() {
         }}
       >
         <div className={styles.chartContainer}>
-        <h2>Team Progress</h2>
+        <h2>User Progress</h2>
         <UserChart values={buildUserChartArray()} showChart={showChart}/>
         
         </div>
