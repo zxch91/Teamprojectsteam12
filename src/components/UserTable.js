@@ -29,41 +29,59 @@ function userTable(props) {
     };
 
     return (
-        <TableContainer component={Paper}>
-          <Table sx={{ 
-        minWidth: "650px",
-        //mx: "20px",
+      <TableContainer 
+        component={Paper} 
+        style={{
+          borderRadius: '15px', // makes the corners rounded
+          boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)', // adds a layered shadow effect
+          overflow: 'hidden', // to apply borderRadius to inner table
         }}
-        aria-label="user table">
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Select</TableCell>
+      >
+        <Table 
+          sx={{ 
+            minWidth: "650px",
+            backgroundColor: '#f8f9fa', // sets background color to light grey
+            border: '2px solid #007bff', // sets border color to #007bff
+            '& th': {
+              color: '#007bff', // sets header text color to #007bff
+              fontWeight: 'bold',
+            },
+            '& tr:hover': {
+              backgroundColor: '#e9ecef', // change row color on hover
+            }
+          }}
+          aria-label="user table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Select</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.id}
+                onClick={(event) => handleRowClick(event, row)}
+                selected={selectedRow && selectedRow.id === row.id}
+              >
+                <TableCell>{row.id}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>
+                  <IconButton aria-label="select">
+                    <CheckBox />
+                  </IconButton>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  onClick={(event) => handleRowClick(event, row)}
-                  selected={selectedRow && selectedRow.id === row.id}
-                >
-                  <TableCell>{row.id}</TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell>
-                    <IconButton aria-label="select">
-                      <CheckBox />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      );
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    
 };
 
 export default userTable;
