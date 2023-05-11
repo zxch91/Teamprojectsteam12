@@ -1,26 +1,33 @@
-import {json} from 'micro';
+import executeQuery from "./db.js";
+const mysql = require("mysql2");
 
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({message: 'Method not allowed. Use POST'});
+  }
 
-export default async function handler (req, res) {
-    console.log("Got a request")
-    if (req.method !== 'POST') {
-      return res.status(405).end();
-    }
-  console.log('Passed the NOT POST check');
-  const username = req.body['username'];
-  const password = req.body['password'];
+  const { username, password } = req.body;
+  console.log(username, password);
 
-  
-    console.log('Received credentials:', { username, password });
-  
-    // Hard-coded credentials for testing purposes
-    const validUsername = 'testuser';
-    const validPassword = 'testpassword';
-  
-    if (username === validUsername && password === validPassword) {
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Missing username or password' });
+  }
+
+  // Query the database
+  const sqlQuery = "SELECT * FROM `User` WHERE username = ? AND password = ?;";
+  const formattedQuery = mysql.format(sqlQuery, [username, password]);
+  console.log(formattedQuery);
+
+  try {
+    const result = await executeQuery(formattedQuery);
+    console.log(result);
+    if (result.length > 0) {
       res.status(200).json({ message: 'Login successful' });
     } else {
-      console.log('Invalid credentials:', { username, password });
       res.status(401).json({ message: 'Invalid username or password' });
     }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
   }
+}
