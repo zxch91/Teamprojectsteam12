@@ -6,6 +6,7 @@ import Chat from "./chat2";
 import { Button, TextField, Typographys } from '@mui/material';
 import Header from "@/components/header";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 /* Would be nice to show the latest message that has been sent when the user hovers over 
 over the chat image. I also need to detach the text for each button from the button. So
@@ -32,6 +33,11 @@ const Landing = () => {
 
   const {query} = useRouter();
   const {username, user_id} = query;
+
+  // Retrieve user_id from the cookie and console log it
+  const retrievedUserId = Cookies.get("user_id");
+  console.log("User ID from cookie:", retrievedUserId);
+
      return (
       <div className = {styles.pageContainer}>
         <div><Header/></div>

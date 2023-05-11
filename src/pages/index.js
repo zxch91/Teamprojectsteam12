@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import styles from "@/styles/Login.module.css";
 import Image from "next/image";
 import React, { useState } from 'react';
+import Cookies from "js-cookie";
 
 
 const Login = () => {
@@ -37,6 +38,9 @@ const Login = () => {
       }
     })
     .then((data) => {
+      //save user ID to cookie
+      Cookies.set("user_id", data.user_id);
+
       // Login successful, redirect to landing page
       router.push({
         pathname: '/landing',
