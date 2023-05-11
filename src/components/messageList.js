@@ -1,8 +1,11 @@
 import { List, ListItem } from '@mui/material';
 import styles from '@/styles/Message.module.css';
+import Cookies from "js-cookie";
 
-function MessageList({ messages }) {
-  const currentUser = 'testuser'; // change later - can route logged in user 
+
+function MessageList({ messages, currentUser }) {
+  console.log(currentUser);
+  console.log(messages);
 
   if (!Array.isArray(messages)) {
     return null; // or handle the error in some other way
@@ -13,11 +16,9 @@ function MessageList({ messages }) {
       {messages.map((message, index) => (
         <ListItem key={index}>
           <div
-            className={`${styles.messageWrapper} ${
-              message.sender === currentUser ? styles.sender : ''
-            }`}
+            className={`${styles.messageWrapper} ${message.sender === currentUser ? styles.sender : ''}`}
           >
-            <span className={styles.messageItem}>{message}</span>
+            <span className={styles.messageItem}>{message.text}</span>
           </div>
         </ListItem>
       ))}

@@ -20,7 +20,7 @@ const Landing = () => {
 
   const handleChatButton = () => {
     router.push("/chat2");
-  };
+};
 
   const dataAnalyticsClicked = () => {
     console.log("Data Clicked");

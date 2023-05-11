@@ -7,6 +7,7 @@ import ChatBox from "../components/ChatBox";
 import Header from "@/components/header";
 import Sidebarv2 from "@/components/Sidebar2";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 function Chat() {
   const [messages, setMessages] = useState([]);
@@ -14,6 +15,9 @@ function Chat() {
   const [selectedChannel, setSelectedChannel] = useState(false);
   const [channel, setChannels] = useState([]);
   const [search, setSearch] = useState("");
+
+  const retrievedUserId = Cookies.get("user_id")
+  console.log(retrievedUserId);
 
   useEffect(() => {
     fetch("/api/message")
@@ -27,11 +31,14 @@ function Chat() {
   };
 
   const fetchChannels = () => {
-    return fetch("api/viewchat", requestOptions)
+    const retrievedUserId = Cookies.get("user_id");
+  
+    return fetch(`/api/viewchat?user_id=${retrievedUserId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => result.result) // extract channels from result property
       .catch((error) => console.log("error", error));
   };
+  
 
   useEffect(() => {
     fetchChannels().then((res) => {
@@ -53,25 +60,6 @@ function Chat() {
     console.log(channel);
   }, [channel]);
 
-  const fetchMessages = async (e) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("group_id", selectedChannel.id);
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:3000/api/message", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -79,7 +67,7 @@ function Chat() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     var urlencoded = new URLSearchParams();
-    urlencoded.append("senderId", "1");
+    urlencoded.append("senderId", retrievedUserId);
     urlencoded.append("recipientId", selectedChannel.id);
     urlencoded.append("content", inputMessage);
 
@@ -99,7 +87,7 @@ function Chat() {
         setMessages((prevMessages) => [
           ...prevMessages,
           {
-            senderId: "1",
+            sender_id: retrievedUserId,
             recipientId: selectedChannel.id,
             content: inputMessage,
           },

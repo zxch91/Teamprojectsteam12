@@ -6,6 +6,7 @@ import Sidebar2 from "@/components/Sidebar2";
 import Channel from "../components/Channel";
 import ChatBox from "../components/ChatBox";
 import Header from "@/components/header";
+import Cookies from "js-cookie";
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -13,6 +14,10 @@ export default function Chat() {
   const [selectedChannel, setSelectedChannel] = useState(false);
   const [channel, setChannels] = useState([]);
   const [search, setSearch] = useState("");
+
+  //RETRIEVE COOKIES
+  const retrievedUserId = Cookies.get("user_id");
+  console.log(retrievedUserId);
 
   useEffect(() => {
     fetch("/api/message")

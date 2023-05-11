@@ -1,5 +1,5 @@
 .messageItem {
-  background-color: #DCF8C6;
+  background-color: #d3d3d3; /* This is a light grey color */
   color: #000;
   border-radius: 7px;
   padding: 10px 15px;
@@ -13,6 +13,9 @@
   font-size: 14px;
   line-height: 1.4;
 }
+
+/* The rest of your CSS goes here... */
+
 
 .messageWrapper {
   display: flex;

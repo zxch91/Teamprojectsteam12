@@ -1,16 +1,22 @@
 import { Box, TextField, Button } from "@mui/material";
 import MessageList from "./messageList";
 import styles from "@/styles/Chat.module.css";
+import Cookies from "js-cookie";
 
 const ChatBox = ({ messages, inputMessage, setInputMessage, sendMessage }) => {
+  const currentUser = Cookies.get("user_id");
+
   console.log(messages);
 
-  const contentArray =
+  const messageArray =
     messages && Array.isArray(messages)
-      ? messages.map((message) => message.content)
+      ? messages.map((message) => ({
+          text: message.content,
+          sender: message.sender_id.toString(),
+        }))
       : [];
 
-  console.log(contentArray);
+  console.log(messageArray);
 
   return (
     <Box
@@ -22,7 +28,7 @@ const ChatBox = ({ messages, inputMessage, setInputMessage, sendMessage }) => {
       }}
     >
       <Box className={styles.messageList}>
-        <MessageList messages={contentArray} />
+        <MessageList messages={messageArray} currentUser={currentUser} />
       </Box>
       <form onSubmit={sendMessage}>
         <TextField
