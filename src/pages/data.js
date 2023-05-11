@@ -31,14 +31,10 @@ export default function DataAnalytics() {
   const [percentage, setPercentage] = useState(0);
   
 
-
-
   var requestOptions = {
     method: 'GET',
     redirect: 'follow'
   };
-
-
 
 
   //CURRENT USER
@@ -82,7 +78,7 @@ export default function DataAnalytics() {
       .catch((error)=> console.log('error', error));
   }
 
-  
+
 
   const fetchType5 = ({selected_project_id, comp}) => {
     const url = new URL("api/grabTeamIsCompleted", window.location.href);
