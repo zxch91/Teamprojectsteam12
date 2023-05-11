@@ -27,21 +27,25 @@ const Login = () => {
       },
       body: JSON.stringify({ username, password: password.password }),
     })
-      .then((response) => {
-        if (response.ok) {
-          // Login successful, redirect to landing page
-          router.push({
-            pathname: '/landing',
-            query: { username },
-          });
-        } else {
-          // Login failed, display error message
-          console.log("Login failed");
-        }
-      })
-      .catch((error) => {
-        console.log(error.message);
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        // Login failed, display error message
+        console.log("Login failed");
+        throw new Error('Login failed');
+      }
+    })
+    .then((data) => {
+      // Login successful, redirect to landing page
+      router.push({
+        pathname: '/landing',
+        query: { username, user_id: data.user_id },
       });
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
   };
 
   return (

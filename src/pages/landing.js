@@ -28,9 +28,10 @@ const Landing = () => {
   const handleDataButton = () => {
     router.push("/data");
   };
+  
 
   const {query} = useRouter();
-  const {username} = query;
+  const {username, user_id} = query;
      return (
       <div className = {styles.pageContainer}>
         <div><Header/></div>

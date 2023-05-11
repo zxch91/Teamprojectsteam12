@@ -22,7 +22,8 @@ export default async function handler(req, res) {
     const result = await executeQuery(formattedQuery);
     console.log(result);
     if (result.length > 0) {
-      res.status(200).json({ message: 'Login successful' });
+      const userId = result[0].user_id;
+      res.status(200).json({ message: 'Login successful', user_id: userId });
     } else {
       res.status(401).json({ message: 'Invalid username or password' });
     }
