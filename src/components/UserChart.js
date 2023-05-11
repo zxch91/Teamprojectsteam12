@@ -87,11 +87,20 @@ export default function UserChart(props) {
         height: '300px',
         overflow: 'auto',
         marginBottom: '20px',
+        backgroundColor: '#f8f9fa',
+        border: '2px solid #007bff',
+        borderRadius: '15px',
+        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)', // added a layered shadow effect
+        padding: '10px',
       }}
     >
       <canvas id="UserChart" ref={chartRef}/>
     </div>
   );
+  
+  
+  
+  
 }
 
 
