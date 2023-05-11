@@ -44,7 +44,6 @@ const Login = () => {
       // Login successful, redirect to landing page
       router.push({
         pathname: '/landing',
-        query: { username, user_id: data.user_id },
       });
     })
     .catch((error) => {
