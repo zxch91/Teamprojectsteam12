@@ -70,9 +70,15 @@ export default function TeamTasksChart(props) {
         height: '300px',
         overflow: 'auto',
         marginBottom: '20px',
+        backgroundColor: '#f8f9fa', // sets background color to light grey
+        border: '2px solid #007bff', // sets border color to #007bff
+        borderRadius: '15px', // makes the corners rounded
+        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)', // adds a layered shadow effect
+        padding: '10px', // internal spacing for a better visual balance
       }}
     >
       <canvas id="TeamTasksChart" ref={chartRef}/>
     </div>
   );
+  
 }
