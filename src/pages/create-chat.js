@@ -11,8 +11,11 @@ import Button from "@mui/material/Button";
 import Sidebarv2 from "@/components/Sidebar2";
 import styles from "@/styles/Chat.module.css";
 import TextField from "@mui/material/TextField";
+import Cookies from "js-cookie";
 
 export default function CreateChat() {
+  const retrievedUserId = Cookies.get("user_id");
+
   var requestOptions = {
     method: "GET",
     redirect: "follow",
@@ -34,8 +37,10 @@ export default function CreateChat() {
         const usernames = [];
         const userIDs = [];
         for (let i = 0; i < res.result.length; i++) {
+          if (res.result[i].user_id != retrievedUserId){
           usernames.push(res.result[i].username);
           userIDs.push(res.result[i].user_id);
+          }
         }
         setUsers(usernames);
         setIds(userIDs);
@@ -51,15 +56,17 @@ export default function CreateChat() {
   const handleCreateChat = () => {
     const chatName = document.getElementById("chatName").value;
     const chatMembers = selectedUsers.map((user) => ids[users.indexOf(user)]); // map usernames to IDs
+    const retrievedUserId = Cookies.get("user_id"); // Ensure this is the correct user ID
     fetch("/api/creategroup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chatName, chatMembers }),
+      body: JSON.stringify({ chatName, chatMembers, retrievedUserId }),
     })
       .then((response) => response.json())
       .then((result) => console.log(result))
       .catch((error) => console.log(error));
   };
+  
 
   const handleUserSelection = (user) => {
     if (selectedUsers.includes(user)) {

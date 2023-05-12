@@ -1,7 +1,6 @@
-import { List, ListItem } from '@mui/material';
+import { List, ListItem, Avatar } from '@mui/material';
 import styles from '@/styles/Message.module.css';
 import Cookies from "js-cookie";
-
 
 function MessageList({ messages, currentUser }) {
   console.log(currentUser);
@@ -18,6 +17,9 @@ function MessageList({ messages, currentUser }) {
           <div
             className={`${styles.messageWrapper} ${message.sender === currentUser ? styles.sender : ''}`}
           >
+            <Avatar className={styles.avatar}>
+              {message.person.substring(0, 2).toUpperCase()}
+            </Avatar>
             <span className={styles.messageItem}>{message.text}</span>
           </div>
         </ListItem>

@@ -13,6 +13,7 @@ const ChatBox = ({ messages, inputMessage, setInputMessage, sendMessage }) => {
       ? messages.map((message) => ({
           text: message.content,
           sender: message.sender_id.toString(),
+          person: message.username,
         }))
       : [];
 
