@@ -19,11 +19,20 @@ export default async function handler(req, res) {
         return;
       }
 
-      // SQL query to select groups where the user_id is a member
+      // SQL query to select groups where the user_id is a member and latest message in each group
       const sqlGet = `
-        SELECT cg.group_name, cg.group_id 
+        SELECT cg.group_name, cg.group_id, m.content as latest_message
         FROM store.Chat_Group as cg
         JOIN store.Group_Member as gm ON cg.group_id = gm.group_id
+        LEFT JOIN (
+          SELECT content, group_id
+          FROM store.Message
+          WHERE (group_id, sent_at) IN (
+            SELECT group_id, MAX(sent_at)
+            FROM store.Message
+            GROUP BY group_id
+          )
+        ) as m ON cg.group_id = m.group_id
         WHERE gm.user_id = ${user_id};
       `;
 

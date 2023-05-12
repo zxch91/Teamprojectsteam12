@@ -16,7 +16,7 @@ function Chat() {
   const [channel, setChannels] = useState([]);
   const [search, setSearch] = useState("");
 
-  const retrievedUserId = Cookies.get("user_id")
+  const retrievedUserId = Cookies.get("user_id");
   console.log(retrievedUserId);
 
   useEffect(() => {
@@ -32,13 +32,12 @@ function Chat() {
 
   const fetchChannels = () => {
     const retrievedUserId = Cookies.get("user_id");
-  
+
     return fetch(`/api/viewchat?user_id=${retrievedUserId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => result.result) // extract channels from result property
       .catch((error) => console.log("error", error));
   };
-  
 
   useEffect(() => {
     fetchChannels().then((res) => {
@@ -48,6 +47,7 @@ function Chat() {
           const channel = {
             id: res[c].group_id,
             name: res[c].group_name,
+            latestMessage: res[c].latest_message, // assuming you have latest_message field
           };
           channels.push(channel);
         }
@@ -59,7 +59,6 @@ function Chat() {
   useEffect(() => {
     console.log(channel);
   }, [channel]);
-
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -133,6 +132,7 @@ function Chat() {
                 <Channel
                   key={channel.id}
                   title={channel.name}
+                  latestMessage={channel.latestMessage}
                   onClick={() => handleChannelSelect(channel)}
                 />
               ))}

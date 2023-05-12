@@ -14,7 +14,9 @@ export default async function handler(req, res) {
 
       var sqlGet =
         "SELECT m.*, u.username FROM Message m \
-  JOIN User u ON m.sender_id = u.user_id WHERE m.group_id = ?";
+JOIN User u ON m.sender_id = u.user_id \
+WHERE m.group_id = ? \
+ORDER BY m.sent_at ASC";
 
       sqlGet = mysql.format(sqlGet, [group_id]);
 

@@ -1,5 +1,5 @@
-import { List, ListItem, Avatar } from '@mui/material';
-import styles from '@/styles/Message.module.css';
+import { List, ListItem, Avatar } from "@mui/material";
+import styles from "@/styles/Message.module.css";
 import Cookies from "js-cookie";
 
 function MessageList({ messages, currentUser }) {
@@ -15,12 +15,16 @@ function MessageList({ messages, currentUser }) {
       {messages.map((message, index) => (
         <ListItem key={index}>
           <div
-            className={`${styles.messageWrapper} ${message.sender === currentUser ? styles.sender : ''}`}
+            className={`${styles.messageWrapper} ${
+              message.sender === currentUser ? styles.sender : ""
+            }`}
           >
             <Avatar className={styles.avatar}>
-              {message.person.substring(0, 2).toUpperCase()}
+              {message.person
+                ? message.person.substring(0, 2).toUpperCase()
+                : ""}
             </Avatar>
-            <span className={styles.messageItem}>{message.text}</span>
+            <span className={styles.messageItem}>{message.text || ""}</span>
           </div>
         </ListItem>
       ))}

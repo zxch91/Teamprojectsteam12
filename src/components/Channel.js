@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const Channel = ({ title, onClick }) => {
+const Channel = ({ title, latestMessage, onClick }) => {
   return (
     <Card
       onClick={onClick}
@@ -49,7 +49,7 @@ const Channel = ({ title, onClick }) => {
             lineHeight: "1.6",
           }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus urna non augue convallis ultrices.
+          {latestMessage}
         </Typography>
       </CardContent>
     </Card>
