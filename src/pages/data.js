@@ -453,7 +453,8 @@ export default function DataAnalytics() {
               marginBottom: "30px"
             }}>
           <div style={{marginRight: "20px"}}><Dropdown onOptionSelect={handleOptionSelect} options={genOptions()}/></div>
-          <div><Percentage percentage={percentage}/></div>
+          <div style={{marginRight: "20px"}}><Percentage percentage={percentage}/></div>
+          <div><SearchBar handleChange={handleChange} text={search}/></div>
           </div>
           <UserTable rows={buildTable()} setrowInfo={handleRowId}/>
         </div>
