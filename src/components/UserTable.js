@@ -9,18 +9,8 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import { CheckBox } from '@mui/icons-material';
 
-/*const userStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-});*/
-
-
-function userTable(props) {
-    //const classes = userStyles;
-
+function UserTable(props) {
     const {rows, setrowInfo} = props
-    
     const [selectedRow, setSelectedRow] = useState(null);
 
     const handleRowClick = (event, row) => {
@@ -32,22 +22,22 @@ function userTable(props) {
       <TableContainer 
         component={Paper} 
         style={{
-          borderRadius: '15px', // makes the corners rounded
-          boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)', // adds a layered shadow effect
-          overflow: 'hidden', // to apply borderRadius to inner table
+          borderRadius: '15px',
+          boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)', 
+          overflow: 'hidden',
         }}
       >
         <Table 
           sx={{ 
             minWidth: "650px",
-            backgroundColor: '#f8f9fa', // sets background color to light grey
-            border: '2px solid #007bff', // sets border color to #007bff
+            backgroundColor: '#f8f9fa', 
+            border: '2px solid #007bff',
             '& th': {
-              color: '#007bff', // sets header text color to #007bff
+              color: '#007bff',
               fontWeight: 'bold',
             },
             '& tr:hover': {
-              backgroundColor: '#e9ecef', // change row color on hover
+              backgroundColor: '#e9ecef',
             }
           }}
           aria-label="user table"
@@ -81,7 +71,6 @@ function userTable(props) {
         </Table>
       </TableContainer>
     );
-    
 };
 
-export default userTable;
+export default UserTable;
