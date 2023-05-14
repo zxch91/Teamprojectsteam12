@@ -5,6 +5,7 @@ import UserTable from '@/components/UserTable';
 import UserChart from '@/components/UserChart';
 import Dropdown from '@/components/Dropdown';
 import Percentage from '@/components/Percentage';
+import SearchBar from '@/components/SearchBar';
 import TeamTasksChart from '@/components/TeamTasksChart'; // Import the new component
 import { SettingsEthernet } from '@mui/icons-material';
 import Cookies from 'js-cookie';
@@ -29,6 +30,7 @@ export default function DataAnalytics() {
   const [teamUnCompleteTasks, setTeamUnCompleteTasks] = useState(new Array());
   const [showChart, setShowChart] = useState(true);
   const [percentage, setPercentage] = useState(0);
+  const [search, setSearch] = useState('');
   
 
   var requestOptions = {
@@ -149,7 +151,7 @@ export default function DataAnalytics() {
         }
       });
     }else if(userType == "leader"){
-      fetchType6({user_id: userID}).then((res) => {
+      fetchType6({user_id: retrievedUserId}).then((res) => {
         if(res){
           setProjects(res.result);
         }
@@ -296,8 +298,16 @@ export default function DataAnalytics() {
   var buildTable = () => {
     var array  =  new Array();
     for( var i = 0;i <emps.length;i++){
+      if (search == ""){
         var row = {id:emps[i].user_id,name:emps[i].username,email:emps[i].email};
         array.push(row);
+      }else{
+        var check = emps[i].username;
+        if (check.indexOf(search) > -1){
+          var row = {id:emps[i].user_id,name:emps[i].username,email:emps[i].email};
+          array.push(row);
+        }
+      }
     }
     return array;
 }
@@ -328,6 +338,11 @@ export default function DataAnalytics() {
   }
 
 
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+
 
   var buildLabelsArray = () => {
     var array = new Array();
@@ -356,6 +371,76 @@ export default function DataAnalytics() {
   if (userType == "admin"){
     return (
                 //ADMIN HTML//
+      <div>
+        
+        <div style={{ textAlign: 'center' }}>
+          <h1>All Teams</h1>
+          <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexWrap: 'nowrap', // change this to 'nowrap'
+              alignItems: 'center',
+              marginBottom: "30px"
+            }}>
+          <div style={{marginRight: "20px"}}><Dropdown onOptionSelect={handleOptionSelect} options={genOptions()}/></div>
+          <div style={{marginRight: "20px"}}><Percentage percentage={percentage}/></div>
+          <div><SearchBar handleChange={handleChange} text={search}/></div>
+          </div>
+          <UserTable rows={buildTable()} setrowInfo={handleRowId}/>
+        </div>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexWrap: 'nowrap', // change this to 'nowrap'
+              alignItems: 'center',
+            }}
+          >
+            
+            <div className={styles.chartContainer}>
+              <h2>User Progress</h2>
+              <UserChart values={buildUserChartArray()} showChart={showChart}/>
+            
+            </div>
+            <div className={styles.chartContainer}>
+              <h2>Overall User Progress</h2>
+              <UserChart values={buildUserChartArray2()} showChart={showChart}/>
+            
+            </div>
+          </div>
+          
+          <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'nowrap',
+          alignItems: 'center',
+        }}
+        className={styles.chartContainer}
+      >
+        <div
+          style={{
+            textAlign: 'center',
+            position: 'absolute',
+            marginTop:'30%',
+          }}
+        >
+          <h2>Team Tasks</h2>
+          <TeamTasksChart
+            Labels={buildLabelsArray()}
+            values1={buildTeamCompleteArray()}
+            values2={buildTeamUnCompleteArray()}
+          />
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  } else if (userType == "leader"){
+    return (
+      //ADMIN HTML//
       <div>
         
         <div style={{ textAlign: 'center' }}>
@@ -420,39 +505,6 @@ export default function DataAnalytics() {
             </div>
           </div>
         </div>
-      </div>
-    );
-  } else if (userType == "leader"){
-    return (
-      //ADMIN HTML//
-      <div>
-      <div style={{ textAlign: 'center' }}>
-      <h1>All Teams</h1>
-      <Dropdown onOptionSelect={handleOptionSelect} options={genOptions()}/>
-      <UserTable rows={buildTable()} setrowInfo={handleRowId}/>
-      </div>
-      <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'nowrap', // change this to 'nowrap'
-          alignItems: 'center',
-        }}
-      >
-        
-        <div className={styles.chartContainer}>
-          <h2>User Progress</h2>
-          <UserChart values={buildUserChartArray()} showChart={showChart}/>
-        
-        </div>
-        <div className={styles.chartContainer}>
-          <h2>Team Tasks</h2>
-          <TeamTasksChart Labels = {buildLabelsArray()} values1={buildTeamCompleteArray()} values2={buildTeamUnCompleteArray()}/>
-        
-        </div>
-      </div>
-      </div>
       </div>
       );
   } else if (userType == "emp"){
