@@ -102,7 +102,7 @@ export default function Chat() {
       redirect: "follow",
     };
 
-    fetch("http://localhost:3000/api/message", requestOptions)
+    fetch("/api/message", requestOptions)
       .then((response) => response.json())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
