@@ -16,7 +16,7 @@
   //reactServer
   const forwardConfig = {
     srcHost: '127.0.0.1', // any valid address
-    srcPort: 3306, // any valid port
+    srcPort: 80, // any valid port
     dstHost: dbServer.host, // destination database
     dstPort: dbServer.port // destination port
   };
@@ -32,7 +32,7 @@
     sshClient.on('ready', () => {
       sshClient.forwardOut(
       forwardConfig.srcHost,
-      forwardConfig.srcPort,
+      forwardConfig.nedi,
       forwardConfig.dstHost,
       forwardConfig.dstPort,
       (err, stream) => {
