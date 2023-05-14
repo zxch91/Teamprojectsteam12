@@ -79,7 +79,7 @@ export default function Chat() {
       redirect: "follow",
     };
 
-    fetch("http://localhost:3000/api/message", requestOptions)
+    fetch("/api/message", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -117,7 +117,7 @@ export default function Chat() {
       redirect: 'follow'
     };
     
-    fetch("http://localhost:3000/api/message?group_id=" + channel.id, requestOptions)
+    fetch("/api/message?group_id=" + channel.id, requestOptions)
       .then(response => response.text())  
       .then(result => console.log(result))
       .catch(error => console.log('error', error));

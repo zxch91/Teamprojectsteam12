@@ -77,7 +77,7 @@ function Chat() {
       redirect: "follow",
     };
 
-    fetch("http://localhost:3000/api/message", requestOptions)
+    fetch("/api/message", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -99,7 +99,7 @@ function Chat() {
 
   const handleChannelSelect = (channel) => {
     setSelectedChannel(channel);
-    fetch(`http://localhost:3000/api/message?group_id=${channel.id}`)
+    fetch(`/api/message?group_id=${channel.id}`)
       .then((response) => response.json())
       .then((result) => {
         setMessages(result.result);
